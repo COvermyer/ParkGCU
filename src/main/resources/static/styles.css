@@ -1,6 +1,55 @@
 body
 {
-	background-color: white;
+	background-color: rgb(222, 230, 235);
+}
+
+.table-deco-purple
+{
+	font-family: Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.table-deco-purple td, .table-deco-purple th 
+{
+	border: 1px solid #E5DEF0;
+	padding: 8px;
+	max-width: 500px;
+}
+
+.table-deco-purple tr:nth-child(even)
+{
+	background-color: #E5DEF0;	
+}
+
+.table-deco-purple tr:nth-child(odd)
+{
+	background-color: #CFC1E3;
+}
+
+.table-deco-purple tr:hover
+{
+	background-color: #E5DEF0;
+}
+
+.table-deco-purple th
+{
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #745FAD;
+	color: white;
+}
+
+.login td
+{
+	padding: 5px;
+}
+
+.login-failed
+{
+	border-radius: 3px;
+	border-color: red;
 }
 
 .title
@@ -8,4 +57,19 @@ body
 	font-family: Arial, Helvetica, sans-serif;
 	color: black;
 }
+
+.flex-container
+{
+	border: 2.5px solid #E7E7E7;
+	border-radius: 8px;
+	background-color: #FDFDFD;
+	width: 70%;
+}
+
+.flex-child
+{
+	padding: 20px;
+}
+
+
 

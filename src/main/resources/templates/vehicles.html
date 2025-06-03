@@ -1,18 +1,13 @@
 <html xmlns:th="https://www.thymeleaf.org" xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/defaultLayout}">
 	<head>
 		<meta charset="UTF-8">
-		<title>Customer Info</title>
+		<title>ParkGCU - Vehicles</title>
 	</head>
 	<body>
 		<div layout:fragment="content">
-			<div align="center" style="width:fit-content; display:flex;" th:if="${customerModel.isValid}" class="flex-container">
-				<div style="text-align: left;" class="flex-child">
-					<h2><span th:text="${customerModel.firstName}">First Name</span> <span th:text="${customerModel.lastName}">Last Name</span></h2>
-					<h4><span>ID: </span><span th:text="${customerModel.customerId}">ID </span></h4>
-				</div>
+			<div align="center" style="width:fit-content; display:flex;" class="flex-container">
 				<div class="flex-child">
-					<h4 align="center">Registered Vehicles</h4>
-					<table style="width:70%;" class="table-deco-purple">
+					<table style="width:100%;" class="table-deco-purple">
 						<thead> <!-- Define the head of the table-->
 							<tr>
 								<th style="text-align:center">Color</th>
@@ -24,10 +19,10 @@
 							</tr>
 						</thead>
 						<tbody> <!-- Body of the table -->
-							<tr th:if="${customerModel.registeredVehicles.empty}">
+							<tr th:if="${registeredVehicles.empty}">
 								<td style="text-align:center;" colspan="6">No registered vehicles</td>
 							</tr>
-							<tr th:each="vehicle : ${customerModel.registeredVehicles}"> <!-- onclick="window.location='/test?${vehicle}';" -->
+							<tr th:each="vehicle : ${registeredVehicles}"> <!-- onclick="window.location='/test?${vehicle}';" -->
 								<td style="text-align: center;"><span th:text="${vehicle.color}">Blue</span></td>
 								<td style="text-align: center;"><span th:text="${vehicle.year}">2015</span></td>
 								<td style="text-align: center;"><span th:text="${vehicle.make}">Jeep</span></td>
