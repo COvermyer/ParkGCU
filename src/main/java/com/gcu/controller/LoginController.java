@@ -37,7 +37,7 @@ public class LoginController {
 		model.addAttribute("title", "Customer Info");
 		model.addAttribute("customerModel", new CustomerModel());
 
-		return "vehicles"; // FIXME
+		return "customerInfo"; // FIXME
 	}
 	
 //	@GetMapping("/doLogin")
