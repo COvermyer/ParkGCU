@@ -1,0 +1,45 @@
+<html xmlns:th="https://www.thymeleaf.org" xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/defaultLayout}">
+	<head>
+		<meta charset="UTF-8">
+		<title>ParkGCU - New Vehicle</title>
+	</head>
+	<body>
+		<div layout:fragment="content">
+			<div align="center" style="width:fit-content; display:flex;" class="flex-container">
+				<div class="flex-child">
+					<form action="#" th:action="@{doVehicleRegistration}" th:object="${vehicleModel}" method="post">
+						<table>
+							<tr>
+								<td><h5>Color:</h5></td>
+								<td><input type="text" th:field="*{color}"/></td>
+							</tr>
+							<tr>
+								<td><h5>Year:</h5></td>
+								<td><input type="text" th:field="*{year}"></td>
+							</tr>
+							<tr>
+								<td><h5>Make:</h5></td>
+								<td><input type="text" th:field="*{make}"></td>
+							</tr>
+							<tr>
+								<td><h5>Model:</h5></td>
+								<td><input type="text" th:field="*{model}"></td>
+							</tr>
+							<tr>
+								<td><h5>State:</h5></td>
+								<td><input type="text" th:field="*{plateState}"></td>
+							</tr>
+							<tr>
+								<td><h5>Plate:</h5></td>
+								<td><input type="text" th:field="*{plateNumber}"></td>
+							</tr>
+							<tr>
+								<td colspan="2"><input type="submit" value="Submit"></td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

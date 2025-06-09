@@ -8,6 +8,17 @@ public class VehicleModel {
 	private String plateState;
 	private String plateNumber;
 	
+	public VehicleModel()
+	{
+		super();
+		this.color = "";
+		this.year = "";
+		this.make = "";
+		this.model = "";
+		this.plateState = "";
+		this.plateNumber = "";
+	}
+	
 	public VehicleModel(String color, String year, String make, String model, String plateState, String plateNumber) {
 		super();
 		this.color = color;
@@ -55,5 +66,26 @@ public class VehicleModel {
 		this.plateState = plateState;
 	}
 	
-	
+	public boolean isValid()
+	{
+		if (color.equals(""))
+			return false;
+		
+		if (year.equals(""))
+			return false;
+		
+		if (make.equals(""))
+			return false;
+		
+		if (model.equals(""))
+			return false;
+		
+		if (plateState.equals(""))
+			return false;
+		
+		if (plateNumber.equals(""))
+			return false;
+		
+		return true;
+	}
 }

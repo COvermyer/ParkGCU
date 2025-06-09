@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -65,6 +67,31 @@ public class CustomerController {
 		model.addAttribute("registeredCustomers", registeredCustomers);
 		
 		return "customers";
+	}
+	
+	@GetMapping("/new")
+	public String displayNewCustomerPage(Model model)
+	{
+		model.addAttribute("title", "New Customer Registration");
+		model.addAttribute("customerModel", new CustomerModel());
+		
+		return "customerRegistration";
+	}
+	
+	@PostMapping("doCustomerRegistration")
+	public String doCustomerRegistration(CustomerModel customerModel, BindingResult bindingResult, Model model)
+	{
+		if(bindingResult.hasErrors())
+		{
+			model.addAttribute("title", "New Customer Registration");
+			System.out.println("Failed Registration detected");
+			
+			return "customerRegistration";
+		}
+		
+		model.addAttribute("title", "Customer Info");
+		model.addAttribute("customerModel", customerModel);
+		return "customerInfo";
 	}
 	
 	@GetMapping("/ci")

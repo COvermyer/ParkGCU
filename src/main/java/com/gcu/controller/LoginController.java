@@ -36,7 +36,7 @@ public class LoginController {
 		
 		model.addAttribute("title", "Customer Info");
 		model.addAttribute("customerModel", new CustomerModel());
-//		System.out.println(String.format("User: %s, Pass: %s", loginModel.getUsername(), loginModel.getPassword()));
+
 		return "vehicles"; // FIXME
 	}
 	

@@ -1,0 +1,33 @@
+<html xmlns:th="https://www.thymeleaf.org" xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/defaultLayout}">
+	<head>
+		<meta charset="UTF-8">
+		<title>ParkGCU - New Customer</title>
+	</head>
+	<body>
+		<div layout:fragment="content">
+			<div align="center" style="width:fit-content; display:flex;" class="flex-container">
+				<div class="flex-child">
+					<form action="#" th:action="@{doCustomerRegistration}" th:object="${customerModel}" method="post">
+						<table>
+							<tr>
+								<td><h5>First Name:</h5></td>
+								<td><input type="text" th:field="*{firstName}"/></td>
+							</tr>
+							<tr>
+								<td><h5>Last Name:</h5></td>
+								<td><input type="text" th:field="*{lastName}"></td>
+							</tr>
+							<tr>
+								<td><h5>ID:</h5></td>
+								<td><input type="text" th:field="*{customerId}"></td>
+							</tr>
+							<tr>
+								<td colspan="2"><input type="submit" value="Submit"></td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
