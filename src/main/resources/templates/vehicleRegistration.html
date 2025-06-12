@@ -11,27 +11,27 @@
 						<table>
 							<tr>
 								<td><h5>Color:</h5></td>
-								<td><input type="text" th:field="*{color}"/></td>
+								<td><input type="text" th:field="*{color}" th:classappend="${#fields.hasErrors('color') ? 'field-failed' : ''}"/></td>
 							</tr>
 							<tr>
 								<td><h5>Year:</h5></td>
-								<td><input type="text" th:field="*{year}"></td>
+								<td><input type="text" th:field="*{year}" th:classappend="${#fields.hasErrors('year') ? 'field-failed' : ''}"></td>
 							</tr>
 							<tr>
 								<td><h5>Make:</h5></td>
-								<td><input type="text" th:field="*{make}"></td>
+								<td><input type="text" th:field="*{make}" th:classappend="${#fields.hasErrors('make') ? 'field-failed' : ''}"></td>
 							</tr>
 							<tr>
 								<td><h5>Model:</h5></td>
-								<td><input type="text" th:field="*{model}"></td>
+								<td><input type="text" th:field="*{model}" th:classappend="${#fields.hasErrors('model') ? 'field-failed' : ''}"></td>
 							</tr>
 							<tr>
 								<td><h5>State:</h5></td>
-								<td><input type="text" th:field="*{plateState}"></td>
+								<td><input type="text" th:field="*{plateState}" th:classappend="${#fields.hasErrors('plateState') ? 'field-failed' : ''}"></td>
 							</tr>
 							<tr>
 								<td><h5>Plate:</h5></td>
-								<td><input type="text" th:field="*{plateNumber}"></td>
+								<td><input type="text" th:field="*{plateNumber}" th:classappend="${#fields.hasErrors('plateNumber') ? 'field-failed' : ''}"></td>
 							</tr>
 							<tr>
 								<td colspan="2"><input type="submit" value="Submit"></td>

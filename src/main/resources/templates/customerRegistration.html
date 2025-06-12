@@ -11,20 +11,48 @@
 						<table>
 							<tr>
 								<td><h5>First Name:</h5></td>
-								<td><input type="text" th:field="*{firstName}"/></td>
+								<td><input type="text" th:field="*{firstName}" th:classappend="${#fields.hasErrors('firstName') ? 'field-failed' : ''}"/></td>
 							</tr>
 							<tr>
 								<td><h5>Last Name:</h5></td>
-								<td><input type="text" th:field="*{lastName}"></td>
+								<td><input type="text" th:field="*{lastName}" th:classappend="${#fields.hasErrors('lastName') ? 'field-failed' : ''}"></td>
 							</tr>
 							<tr>
 								<td><h5>ID:</h5></td>
-								<td><input type="text" th:field="*{customerId}"></td>
+								<td><input type="text" th:field="*{customerId}" th:classappend="${#fields.hasErrors('customerId') ? 'field-failed' : ''}"></td>
 							</tr>
 							<tr>
-								<td colspan="2"><input type="submit" value="Submit"></td>
+								<td><h5>Email:</h5></td>
+								<td><input type="text" th:field="*{email}" th:classappend="${#fields.hasErrors('email') ? 'field-failed' : ''}"></td>
+							</tr>
+							<tr>
+								<td><h5>Phone Number:</h5></td>
+								<td><input type="text" th:field="*{phoneNumber}" th:classappend="${#fields.hasErrors('phoneNumber') ? 'field-failed' : ''}"></td>
+							</tr>
+							<tr>
+								<td><h5>Username:</h5></td>
+								<td><input type="text" th:field="*{username}" th:classappend="${#fields.hasErrors('username') ? 'field-failed' : ''}"></td>
+							</tr>
+							<tr>
+								<td><h5>Password:</h5></td>
+								<td><input type="password" th:field="*{password}" th:classappend="${#fields.hasErrors('password') ? 'field-failed' : ''}"></td>
+							</tr>
+							
+							<tr>
+								<td colspan="2" align="center"><input type="submit" value="Submit"></td>
 							</tr>
 						</table>
+						<h5 style="color:red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name</h5>
+						<h5 style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name</h5>
+						<h5 style="color:red" th:if="${#fields.hasErrors('customerId')}" th:errors="*{customerId}">ID</h5>
+						<h5 style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email</h5>
+						<h5 style="color:red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone #</h5>
+						<h5 style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username</h5>
+						<h5 style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password</h5> 
+						<!--<div th:if="${#fields.hasErrors('*')}">Errors:</div>
+						<div th:each="err : ${#fields.errors('*')}">
+							<span style="color:red" th:text="${err}" class="fieldError"></span>
+						</div>-->					
 					</form>
 				</div>
 			</div>

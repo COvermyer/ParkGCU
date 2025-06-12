@@ -3,6 +3,7 @@ package com.gcu.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,19 +11,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.gcu.business.VehiclesBusinessServiceInterface;
 import com.gcu.model.VehicleModel;
 
+import jakarta.validation.Valid;
+
 @Controller
-@RequestMapping("/v")
+@RequestMapping("/vehicles")
 public class VehicleController {
 
-//	@GetMapping("/default")
-//	public String defaultView(Model model)
-//	{
-//		model.addAttribute("title", "Registered Vehicles");
-//		model.addAttribute("registeredVehicles", new ArrayList<VehicleModel>());
-//		return "vehicles";
-//	}	
+	@Autowired
+	VehiclesBusinessServiceInterface vehiclesService;
 	
 	@GetMapping("/all")
 	public String displayVehicles(Model model)
@@ -47,7 +46,7 @@ public class VehicleController {
 	}
 	
 	@PostMapping("/doVehicleRegistration")
-	public String doVehicleRegistration(VehicleModel vehicleModel, BindingResult bindingResult, Model model)
+	public String doVehicleRegistration(@Valid VehicleModel vehicleModel, BindingResult bindingResult, Model model)
 	{
 		if (bindingResult.hasErrors() || !vehicleModel.isValid())
 		{
@@ -56,15 +55,11 @@ public class VehicleController {
 			return "vehicleRegistration";
 		}
 		
-		
+		// The commit for adding the vehicle to the DB should go here, passed through VehicleModel
+		vehiclesService.addVehicle(vehicleModel);
 		
 		model.addAttribute("title", "Registered Vehicles");
-		// The commit for adding the vehicle to the DB should go here, passed through VehicleModel
-		
-		// TEMP
-		List<VehicleModel> vehicles = new ArrayList<VehicleModel>();
-		vehicles.add(vehicleModel);
-		model.addAttribute("registeredVehicles", vehicles);
+		model.addAttribute("registeredVehicles", vehiclesService.getVehicles());
 		return "vehicles";
 	}
 }

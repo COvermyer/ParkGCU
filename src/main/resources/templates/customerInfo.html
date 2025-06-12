@@ -24,10 +24,10 @@
 							</tr>
 						</thead>
 						<tbody> <!-- Body of the table -->
-							<tr th:if="${customerModel.registeredVehicles.empty}">
+							<tr th:if="${registeredVehicles.isEmpty()}">
 								<td style="text-align:center;" colspan="6">No registered vehicles</td>
 							</tr>
-							<tr th:each="vehicle : ${customerModel.registeredVehicles}"> <!-- onclick="window.location='/test?${vehicle}';" -->
+							<tr th:each="vehicle : ${registeredVehicles}"> <!-- onclick="window.location='/test?${vehicle}';" -->
 								<td style="text-align: center;"><span th:text="${vehicle.color}">Blue</span></td>
 								<td style="text-align: center;"><span th:text="${vehicle.year}">2015</span></td>
 								<td style="text-align: center;"><span th:text="${vehicle.make}">Jeep</span></td>

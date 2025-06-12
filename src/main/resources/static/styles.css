@@ -52,6 +52,13 @@ body
 	border-color: red;
 }
 
+.field-failed
+{
+	border-radius: 3px;
+	border-color: red;
+}
+
+
 .title
 {
 	font-family: Arial, Helvetica, sans-serif;

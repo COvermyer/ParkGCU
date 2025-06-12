@@ -1,11 +1,24 @@
 package com.gcu.model;
 
+import jakarta.validation.constraints.NotEmpty;
+
 public class VehicleModel {
+	@NotEmpty(message="Color is a required field")
 	private String color;
+	
+	@NotEmpty(message="Year is a required field")
 	private String year;
+	
+	@NotEmpty(message="Make is a required field")
 	private String make;
+	
+	@NotEmpty(message="Model is a required field")
 	private String model;
+	
+	@NotEmpty(message="State is a required field")
 	private String plateState;
+	
+	@NotEmpty(message="Plate is a required field")
 	private String plateNumber;
 	
 	public VehicleModel()
