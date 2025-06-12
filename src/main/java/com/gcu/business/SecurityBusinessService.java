@@ -1,6 +1,9 @@
 package com.gcu.business;
 
-public class SecurityBusinessService implements LoginBusinessServiceInterface {
+/**
+ * Security service for running user authentications
+ */
+public class SecurityBusinessService implements SecurityBusinessServiceInterface {
 
 	/**
 	 * Start up method for Security Business Service

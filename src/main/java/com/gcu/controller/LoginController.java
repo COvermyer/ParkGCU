@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.gcu.business.LoginBusinessServiceInterface;
+import com.gcu.business.SecurityBusinessServiceInterface;
 import com.gcu.model.CustomerModel;
 import com.gcu.model.LoginModel;
 
@@ -19,7 +19,7 @@ import jakarta.validation.Valid;
 public class LoginController {
 
 	@Autowired
-	LoginBusinessServiceInterface security;
+	SecurityBusinessServiceInterface security;
 	
 	@GetMapping("/")
 	public String displayLogin(Model model)

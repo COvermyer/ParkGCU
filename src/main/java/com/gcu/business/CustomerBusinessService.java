@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.gcu.model.CustomerModel;
 
+/**
+ * Service to manage Customer DB
+ */
 public class CustomerBusinessService implements CustomersBusinessServiceInterface {
 
 	/**

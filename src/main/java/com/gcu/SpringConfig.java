@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.gcu.business.CustomerBusinessService;
 import com.gcu.business.CustomersBusinessServiceInterface;
-import com.gcu.business.LoginBusinessServiceInterface;
+import com.gcu.business.SecurityBusinessServiceInterface;
 import com.gcu.business.SecurityBusinessService;
 import com.gcu.business.VehiclesBusinessService;
 import com.gcu.business.VehiclesBusinessServiceInterface;
@@ -15,7 +15,7 @@ import com.gcu.business.VehiclesBusinessServiceInterface;
 public class SpringConfig {
 
 	@Bean(name="securityBusinessService", initMethod="init", destroyMethod="destroy")
-	LoginBusinessServiceInterface getSecurityService()
+	SecurityBusinessServiceInterface getSecurityService()
 	{
 		return new SecurityBusinessService();
 	}

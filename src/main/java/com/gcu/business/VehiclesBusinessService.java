@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.gcu.model.VehicleModel;
 
+/**
+ * Service to handle Vehicle DB pulls
+ */
 public class VehiclesBusinessService implements VehiclesBusinessServiceInterface {
 
 	/**
@@ -66,6 +69,9 @@ public class VehiclesBusinessService implements VehiclesBusinessServiceInterface
 		return true;
 	}
 
+	/**
+	 * Destruction method for service.
+	 */
 	@Override
 	public void destroy() {
 		System.out.println("Vehicle Business Service terminated.");

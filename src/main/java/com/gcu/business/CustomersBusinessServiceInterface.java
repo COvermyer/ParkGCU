@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.gcu.model.CustomerModel;
 
+/**
+ * Interface designs the contract for CustomersBusinessService
+ */
 public interface CustomersBusinessServiceInterface {
 
 	public void init();
