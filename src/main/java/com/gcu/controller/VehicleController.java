@@ -27,13 +27,7 @@ public class VehicleController {
 	public String displayVehicles(Model model)
 	{
 		model.addAttribute("title", "Registered Vehicles");
-		
-		List<VehicleModel> vehicles = new ArrayList<VehicleModel>();
-		vehicles.add(new VehicleModel("Blue", "2015", "Jeep", "Patriot", "AZ", "8VA15M"));
-		vehicles.add(new VehicleModel("Red", "2011", "Ford", "Focus", "AZ", "ANA8Y6"));
-		vehicles.add(new VehicleModel("Green", "2006", "Vespa", "Gran Turismo", "AZ", "V3SPA"));
-		
-		model.addAttribute("registeredVehicles", vehicles);
+		model.addAttribute("registeredVehicles", vehiclesService.getVehicles());
 		return "vehicles";
 	}
 	
@@ -48,16 +42,22 @@ public class VehicleController {
 	@PostMapping("/doVehicleRegistration")
 	public String doVehicleRegistration(@Valid VehicleModel vehicleModel, BindingResult bindingResult, Model model)
 	{
-		if (bindingResult.hasErrors() || !vehicleModel.isValid())
+		/*
+		 * Return to form if:
+		 * - Form has errors
+		 * - VehicleModel is not valid
+		 * - Add attempt fails
+		 */
+		//FIXME: Need to give an error message for a bad customer ID
+		if (bindingResult.hasErrors() || !vehicleModel.isValid() ||
+				!vehiclesService.addVehicle(vehicleModel))
 		{
 			model.addAttribute("title", "New Vehicle Registration");
 			System.out.println("failed vehicle registration detected");
 			return "vehicleRegistration";
 		}
 		
-		// The commit for adding the vehicle to the DB should go here, passed through VehicleModel
-		vehiclesService.addVehicle(vehicleModel);
-		
+		// Pass to the vehicle summary page on success
 		model.addAttribute("title", "Registered Vehicles");
 		model.addAttribute("registeredVehicles", vehiclesService.getVehicles());
 		return "vehicles";

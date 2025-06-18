@@ -48,7 +48,7 @@ public class CustomerController {
 		CustomerModel cm = new CustomerModel();
 		cm.setFirstName("Caleb");
 		cm.setLastName("Overmyer");
-		cm.setCustomerId("063596");
+		cm.setCustomerId(63596);
 		
 		model.addAttribute("customerModel", cm);
 		model.addAttribute("registeredVehicles", vehiclesService.getVehicles());

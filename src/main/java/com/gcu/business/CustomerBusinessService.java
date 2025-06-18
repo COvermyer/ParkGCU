@@ -3,6 +3,10 @@ package com.gcu.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.gcu.data.CustomersDataService;
+import com.gcu.data.entity.CustomerEntity;
 import com.gcu.model.CustomerModel;
 
 /**
@@ -10,6 +14,9 @@ import com.gcu.model.CustomerModel;
  */
 public class CustomerBusinessService implements CustomersBusinessServiceInterface {
 
+	@Autowired
+	CustomersDataService service;
+	
 	/**
 	 * Initialization method for service
 	 */
@@ -23,44 +30,18 @@ public class CustomerBusinessService implements CustomersBusinessServiceInterfac
 	 */
 	@Override
 	public List<CustomerModel> getCustomers() {
-		// TODO Implement customer data pull from DB here
-		List<CustomerModel> customers = new ArrayList<CustomerModel>();
+		List<CustomerEntity> customersEntity = new ArrayList<CustomerEntity>();
+		List<CustomerModel> customersDomain = new ArrayList<CustomerModel>();
+		for (CustomerEntity e : customersEntity)
+			customersDomain.add(new CustomerModel(e.getCustomerId(),
+													e.getFirstName(),
+													e.getLastName(),
+													e.getEmail(),
+													e.getPhoneNumber(),
+													e.getUsername(),
+													e.getPassword()));
 		
-		// #TESTING
-		// populate a list with fake customer data
-		CustomerModel cm1 = new CustomerModel();
-		cm1.setFirstName("Caleb");
-		cm1.setLastName("Overmyer");
-		cm1.setCustomerId("123456");
-		cm1.setEmail("MyEmail@email.org");
-		cm1.setPhoneNumber("555-555-5555");
-		cm1.setUsername("COvermyer");
-		cm1.setPassword("pass");
-		
-		CustomerModel cm2 = new CustomerModel();
-		cm2.setFirstName("Nora");
-		cm2.setLastName("Marshall");
-		cm2.setCustomerId("123456");
-		cm2.setEmail("MyEmail@email.org");
-		cm2.setPhoneNumber("555-555-5555");
-		cm2.setUsername("NMarshall");
-		cm2.setPassword("pass");
-		
-		CustomerModel cm3 = new CustomerModel();
-		cm3.setFirstName("Randy");
-		cm3.setLastName("Wendt");
-		cm3.setCustomerId("123456");
-		cm3.setEmail("MyEmail@email.org");
-		cm3.setPhoneNumber("555-555-5555");
-		cm3.setUsername("RWendt");
-		cm3.setPassword("pass");
-		
-		customers.add(cm1);
-		customers.add(cm2);
-		customers.add(cm3);
-		// #END TESTING
-		
-		return customers;
+		return customersDomain;
 	}
 
 	/**
@@ -68,18 +49,16 @@ public class CustomerBusinessService implements CustomersBusinessServiceInterfac
 	 */
 	@Override
 	public CustomerModel getCustomerById(String customerId) {
-		// TODO Implement data pull from DB here
 		CustomerModel customer = new CustomerModel();
+		CustomerEntity e = service.findById(Integer.valueOf(customerId));
 		
-		// # TESTING
-		customer.setFirstName("Nora");
-		customer.setLastName("Marshall");
-		customer.setEmail("NMarshall@email.org");
-		customer.setPhoneNumber("(555)555-5555");
-		customer.setUsername("NMarshall");
-		customer.setPassword("pass");
-		customer.setCustomerId(customerId);
-		// # END TESTING
+		customer.setCustomerId(e.getCustomerId());
+		customer.setFirstName(e.getFirstName());
+		customer.setLastName(e.getLastName());
+		customer.setEmail(e.getEmail());
+		customer.setPhoneNumber(e.getPhoneNumber());
+		customer.setUsername(e.getUsername());
+		customer.setPassword(e.getPassword());
 		
 		return customer;
 	}

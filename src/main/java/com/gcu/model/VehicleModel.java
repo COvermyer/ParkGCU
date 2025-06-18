@@ -1,13 +1,22 @@
 package com.gcu.model;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 public class VehicleModel {
+	
+	private Integer customerId;
+	
+	private Integer vehicleId;
+	
 	@NotEmpty(message="Color is a required field")
 	private String color;
 	
-	@NotEmpty(message="Year is a required field")
-	private String year;
+	@Min(value=1900, message="Year must be greater than 1900")
+	@Max(value=2100, message="Year must be less than 2100")
+	private Integer year;
 	
 	@NotEmpty(message="Make is a required field")
 	private String make;
@@ -24,16 +33,19 @@ public class VehicleModel {
 	public VehicleModel()
 	{
 		super();
+		this.customerId = 0;
 		this.color = "";
-		this.year = "";
+		this.year = 0;
 		this.make = "";
 		this.model = "";
 		this.plateState = "";
 		this.plateNumber = "";
 	}
 	
-	public VehicleModel(String color, String year, String make, String model, String plateState, String plateNumber) {
+	public VehicleModel(Integer customerId, Integer vehicleId, String color, Integer year, String make, String model, String plateState, String plateNumber) {
 		super();
+		this.customerId = customerId;
+		this.vehicleId = vehicleId;
 		this.color = color;
 		this.year = year;
 		this.make = make;
@@ -42,16 +54,22 @@ public class VehicleModel {
 		this.plateNumber = plateNumber;
 	}
 	
+	public Integer getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
+	}
 	public String getColor() {
 		return color;
 	}
 	public void setColor(String color) {
 		this.color = color;
 	}
-	public String getYear() {
+	public Integer getYear() {
 		return year;
 	}
-	public void setYear(String year) {
+	public void setYear(Integer year) {
 		this.year = year;
 	}
 	public String getMake() {
@@ -80,7 +98,7 @@ public class VehicleModel {
 	}
 	
 	public boolean isValid()
-	{
+	{	
 		if (color.equals(""))
 			return false;
 		

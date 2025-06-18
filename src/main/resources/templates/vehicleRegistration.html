@@ -10,6 +10,10 @@
 					<form action="#" th:action="@{doVehicleRegistration}" th:object="${vehicleModel}" method="post">
 						<table>
 							<tr>
+								<td><h5>Customer ID:</h5></td>
+								<td><input type="text" th:field="*{customerId}" th:classappend="${#fields.hasErrors('customerId') ? 'field-failed' : ''}"/></td>
+							</tr>
+							<tr>
 								<td><h5>Color:</h5></td>
 								<td><input type="text" th:field="*{color}" th:classappend="${#fields.hasErrors('color') ? 'field-failed' : ''}"/></td>
 							</tr>
@@ -37,6 +41,13 @@
 								<td colspan="2"><input type="submit" value="Submit"></td>
 							</tr>
 						</table>
+						<h5 style="color:red" th:if="${#fields.hasErrors('customerId')}" th:errors="*{customerId}">cId</h5>
+						<h5 style="color:red" th:if="${#fields.hasErrors('color')}" th:errors="*{color}">Color</h5>
+						<h5 style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year</h5>
+						<h5 style="color:red" th:if="${#fields.hasErrors('make')}" th:errors="*{make}">Make</h5>
+						<h5 style="color:red" th:if="${#fields.hasErrors('model')}" th:errors="*{model}">Model</h5>
+						<h5 style="color:red" th:if="${#fields.hasErrors('plateState')}" th:errors="*{plateState}">State</h5>
+						<h5 style="color:red" th:if="${#fields.hasErrors('plateNumber')}" th:errors="*{plateNumber}">Plate</h5>
 					</form>
 				</div>
 			</div>

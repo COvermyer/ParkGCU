@@ -12,5 +12,6 @@ public interface VehiclesBusinessServiceInterface {
 	public List<VehicleModel> getVehicles();
 	public List<VehicleModel> getVehiclesByCustomerId(String customerId);
 	public boolean addVehicle(VehicleModel vehicle);
+	public boolean deleteVehicleById(int id);
 	public void destroy();
 }
