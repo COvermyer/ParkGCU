@@ -6,6 +6,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -63,9 +64,25 @@ public class CustomersDataService implements DataAccessInterface<CustomerEntity>
 	}
 
 	@Override
-	public boolean create(CustomerEntity t) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean create(CustomerEntity customer) {
+		String sql = "INSERT INTO customers (customerId, firstName, lastName, email, phoneNumber, username, password) values (?, ?, ?, ?, ?, ?, ?)";
+		int num = -1;
+		try
+		{
+			num = jdbcTemplateObject.update(sql, 
+											customer.getCustomerId(),
+											customer.getFirstName(),
+											customer.getLastName(),
+											customer.getEmail(),
+											customer.getPhoneNumber(),
+											customer.getUsername(),
+											customer.getPassword());
+		} catch(DataAccessException d) { num = 0; }
+		catch (Exception e) { e.printStackTrace(); }
+		
+		System.out.println("Rows affected: " + num);
+		
+		return (num == 1) ? true : false;
 	}
 
 	@Override
@@ -75,9 +92,25 @@ public class CustomersDataService implements DataAccessInterface<CustomerEntity>
 	}
 
 	@Override
-	public boolean delete(CustomerEntity t) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(CustomerEntity customer) {
+		String sql1 = "DELETE FROM vehicles WHERE customerId = ?";
+		String sql2 = "DELETE FROM customers WHERE customerId = ?";
+		
+		int num = -1;
+		// Delete from vehicles
+		try
+		{
+			jdbcTemplateObject.update(sql1, customer.getCustomerId());
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		// Delete from customers
+		try
+		{
+			num = jdbcTemplateObject.update(sql2, customer.getCustomerId());
+		} catch(DataAccessException d) { num = 0; }
+		catch (Exception e) { e.printStackTrace(); }
+		
+		return (num >= 1) ? true : false;
 	}
 
 }

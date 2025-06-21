@@ -69,7 +69,13 @@ public class CustomerBusinessService implements CustomersBusinessServiceInterfac
 	@Override
 	public boolean addCustomer(CustomerModel customer)
 	{
-		System.out.println(String.format("Customer %s %s added.", customer.getFirstName(), customer.getLastName()));
+		service.create(new CustomerEntity(customer.getCustomerId(),
+											customer.getFirstName(),
+											customer.getLastName(),
+											customer.getEmail(),
+											customer.getPhoneNumber(),
+											customer.getUsername(),
+											customer.getPassword()));
 		return false;
 	}
 	
