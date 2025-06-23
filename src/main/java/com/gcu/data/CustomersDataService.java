@@ -113,4 +113,27 @@ public class CustomersDataService implements DataAccessInterface<CustomerEntity>
 		return (num >= 1) ? true : false;
 	}
 
+	public int validateUserLogin(String username, String password)
+	{
+		int customerId = -1;
+		CustomerEntity customer = null;
+		
+		String sql = "SELECT * FROM customers WHERE UPPER(username) = ?";
+		try
+		{
+			// Query for a user by username
+			List<CustomerEntity> results = jdbcTemplateObject.query(sql, new CustomerRowMapper(), username.toUpperCase());
+			if(results.size() == 1)
+				customer = results.get(0);
+			
+			// validate the password
+			if (customer.getPassword().equals(password))
+				customerId = customer.getCustomerId();
+			
+		} catch(DataAccessException d) { d.printStackTrace(); }
+		catch (Exception e) { e.printStackTrace(); }
+		
+		return customerId;
+	}
+	
 }

@@ -78,7 +78,7 @@ public class CustomerController {
 	@PostMapping("doCustomerRegistration")
 	public String doCustomerRegistration(@Valid CustomerModel customerModel, BindingResult bindingResult, Model model)
 	{
-		if(bindingResult.hasErrors())
+		if(bindingResult.hasErrors() || !customersService.addCustomer(customerModel))
 		{
 			model.addAttribute("title", "New Customer Registration");
 			System.out.println("Failed Registration detected");
@@ -86,10 +86,9 @@ public class CustomerController {
 			return "customerRegistration";
 		}
 		
-		model.addAttribute("title", "Customer Info");
-		model.addAttribute("customerModel", customerModel);
-		model.addAttribute("registeredVehicles", new ArrayList<VehicleModel>());
-		return "customerInfo";
+		model.addAttribute("title", "Customers");
+		model.addAttribute("registeredCustomers", customersService.getCustomers());
+		return "customers";
 	}
 	
 	@GetMapping("/ci")

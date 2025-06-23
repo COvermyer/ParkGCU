@@ -41,6 +41,30 @@ body
 	color: white;
 }
 
+.linked-table a:link
+{
+	text-decoration: none;
+	color: black;
+}
+
+.linked-table a:visited
+{
+	text-decoration: none;
+	color: black;
+}
+
+.linked-table a:hover
+{
+	text-decoration: none;
+	color: black;
+}
+
+.linked-table a:active
+{
+	text-decoration: none;
+	color: black;
+}
+
 .login td
 {
 	padding: 5px;

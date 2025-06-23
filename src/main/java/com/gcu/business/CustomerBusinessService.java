@@ -30,7 +30,7 @@ public class CustomerBusinessService implements CustomersBusinessServiceInterfac
 	 */
 	@Override
 	public List<CustomerModel> getCustomers() {
-		List<CustomerEntity> customersEntity = new ArrayList<CustomerEntity>();
+		List<CustomerEntity> customersEntity = service.findAll();
 		List<CustomerModel> customersDomain = new ArrayList<CustomerModel>();
 		for (CustomerEntity e : customersEntity)
 			customersDomain.add(new CustomerModel(e.getCustomerId(),
@@ -69,14 +69,13 @@ public class CustomerBusinessService implements CustomersBusinessServiceInterfac
 	@Override
 	public boolean addCustomer(CustomerModel customer)
 	{
-		service.create(new CustomerEntity(customer.getCustomerId(),
+		return service.create(new CustomerEntity(customer.getCustomerId(),
 											customer.getFirstName(),
 											customer.getLastName(),
 											customer.getEmail(),
 											customer.getPhoneNumber(),
 											customer.getUsername(),
 											customer.getPassword()));
-		return false;
 	}
 	
 	/**
