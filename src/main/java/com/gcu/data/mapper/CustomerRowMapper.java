@@ -15,7 +15,7 @@ public class CustomerRowMapper implements RowMapper<CustomerEntity> {
             rs.getString("firstName"),
             rs.getString("lastName"),
             rs.getString("email"),
-            rs.getString("phone"), // ✅ corrected from "phoneNumber"
+            rs.getString("phoneNumber"), // ✅ corrected from "phoneNumber"
             rs.getString("username"),
             rs.getString("password")
         );

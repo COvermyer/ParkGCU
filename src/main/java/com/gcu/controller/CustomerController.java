@@ -90,8 +90,9 @@ public class CustomerController {
     public String editCustomer(@PathVariable int id, Model model) {
         CustomerModel customer = customersService.getCustomerById(String.valueOf(id));
         if (customer != null) {
-            model.addAttribute("customer", customer);
-            return "editCustomer";
+        	model.addAttribute("title", "Edit Customer");
+            model.addAttribute("customerModel", customer);
+            return "customerEdit";
         }
         return "redirect:/customers/all";
     }

@@ -5,52 +5,59 @@
 	</head>
 	<body>
 		<div layout:fragment="content">
-			<div align="center" style="width:fit-content; display:flex;" class="flex-container">
-				<div class="flex-child">
-					<form action="#" th:action="@{doVehicleRegistration}" th:object="${vehicleModel}" method="post">
-						<table>
-							<tr>
-								<td><h5>Customer ID:</h5></td>
-								<td><input type="text" th:field="*{customerId}" th:classappend="${#fields.hasErrors('customerId') ? 'field-failed' : ''}"/></td>
-							</tr>
-							<tr>
-								<td><h5>Color:</h5></td>
-								<td><input type="text" th:field="*{color}" th:classappend="${#fields.hasErrors('color') ? 'field-failed' : ''}"/></td>
-							</tr>
-							<tr>
-								<td><h5>Year:</h5></td>
-								<td><input type="text" th:field="*{year}" th:classappend="${#fields.hasErrors('year') ? 'field-failed' : ''}"></td>
-							</tr>
-							<tr>
-								<td><h5>Make:</h5></td>
-								<td><input type="text" th:field="*{make}" th:classappend="${#fields.hasErrors('make') ? 'field-failed' : ''}"></td>
-							</tr>
-							<tr>
-								<td><h5>Model:</h5></td>
-								<td><input type="text" th:field="*{model}" th:classappend="${#fields.hasErrors('model') ? 'field-failed' : ''}"></td>
-							</tr>
-							<tr>
-								<td><h5>State:</h5></td>
-								<td><input type="text" th:field="*{plateState}" th:classappend="${#fields.hasErrors('plateState') ? 'field-failed' : ''}"></td>
-							</tr>
-							<tr>
-								<td><h5>Plate:</h5></td>
-								<td><input type="text" th:field="*{plateNumber}" th:classappend="${#fields.hasErrors('plateNumber') ? 'field-failed' : ''}"></td>
-							</tr>
-							<tr>
-								<td colspan="2"><input type="submit" value="Submit"></td>
-							</tr>
-						</table>
-						<h5 style="color:red" th:if="${#fields.hasErrors('customerId')}" th:errors="*{customerId}">cId</h5>
-						<h5 style="color:red" th:if="${#fields.hasErrors('color')}" th:errors="*{color}">Color</h5>
-						<h5 style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year</h5>
-						<h5 style="color:red" th:if="${#fields.hasErrors('make')}" th:errors="*{make}">Make</h5>
-						<h5 style="color:red" th:if="${#fields.hasErrors('model')}" th:errors="*{model}">Model</h5>
-						<h5 style="color:red" th:if="${#fields.hasErrors('plateState')}" th:errors="*{plateState}">State</h5>
-						<h5 style="color:red" th:if="${#fields.hasErrors('plateNumber')}" th:errors="*{plateNumber}">Plate</h5>
+				<div class="container mt-5 flex-container">
+					<form action="#" th:action="@{doVehicleRegistration}" th:object="${vehicleModel}" method="post" class="needs-validation" novalidate>
+						<!-- Customer ID -->
+						<div class="mb-3">
+							<label for="customerId" class="form-label">Customer ID</label>
+							<input type="text" th:field="*{customerId}" placeholder="e.g. 10001"
+									class="form-control" data-bs-toggle="tooltip" title="Unique ID for your account." required/>
+							<!-- div class="text-danger" th:if="${#field.hasErrors('customerId')}" th:errors="*{customerId}"></div -->
+						</div>
+						<!-- Color -->
+						<div class="mb-3">
+							<label for="color" class="form-label">Color</label>
+							<input type="text" th:field="*{color}" placeholder="e.g. Blue"
+									class="form-control" data-bs-toggle="tooltip" title="Color of your vehicle" required/>
+							<div class="text-danger" th:if="${#fields.hasErrors('color')}" th:errors="*{color}"></div>
+						</div>
+						<!-- Year -->
+						<div class="mb-3">
+							<label for="year" class="form-label">Year</label>
+							<input type="number" th:field="*{year}" placeholder="e.g. Blue" min="1900" max="2099"
+									class="form-control" data-bs-toggle="tooltip" title="Year of production" required/>
+							<div class="text-danger" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+						</div>
+						<!-- Make -->
+						<div class="mb-3">
+							<label for="text" class="form-label">Make</label>
+							<input type="text" th:field="*{make}" placeholder="e.g. Jeep"
+									class="form-control" data-bs-toggle="tooltip" title="Make of Vehicle" required/>
+							<div class="text-danger" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+						</div>
+						<!-- Model -->
+						<div class="mb-3">
+							<label for="model" class="form-label">Model</label>
+							<input type="text" th:field="*{model}" placeholder="e.g. Patriot"
+									class="form-control" data-bs-toggle="tooltip" title="Vehicle Model" required/>
+							<div class="text-danger" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></div>
+						</div>
+						<!-- State -->
+						<div class="mb-3">
+							<label for="plateState" class="form-label">State</label>
+							<input type="text" th:field="*{plateState}" placeholder="e.g. AZ" 
+									class="form-control" data-bs-toggle="tooltip" title="State of Plate/Registration" required/>
+							<div class="text-danger" th:if="${#fields.hasErrors('plateState')}" th:errors="*{plateState}"></div>
+						</div>
+						<!-- Plate -->
+						<div class="mb-3">
+							<label for="plateNumber" class="form-label">Plate</label>
+							<input type="text" th:field="*{plateNumber}" placeholder="e.g. XXX000"
+									class="form-control" data-bs-toggle="tooltip" title="Plate number" required/>
+							<div class="text-danger" th:if="${#fields.hasErrors('plateNumber')}" th:errors="*{plateNumber}"></div>
+						</div>
 					</form>
 				</div>
 			</div>
-		</div>
 	</body>
 </html>

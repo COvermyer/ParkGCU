@@ -47,7 +47,17 @@ public class VehicleModel {
     /**
      * Default constructor
      */
-    public VehicleModel() {}
+    public VehicleModel() {
+    	this.vehicleId = 0;
+        this.customerId = 0;
+        this.color = "";
+        this.year = 0;
+        this.make = "";
+        this.model = "";
+        this.plateState = "";
+        this.plateNumber = "";
+    	
+    }
 
     /**
      * Full constructor for creating a complete VehicleModel object

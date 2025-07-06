@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/defaultLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Customer</title>
+</head>
+<body>
+	<div layout:fragment="content">
+    	<div class="container mt-5 flex-container">
+        	<form th:action="@{/customers/update}" th:object="${customerModel}" method="post">
+            
+				<!-- Hidden fields -->
+				<input type="hidden" th:field="*{customerId}" />
+				
+				<div class="mb-3">
+				    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" th:field="*{firstName}" placeholder="e.g., John"
+				             class="form-control" data-bs-toggle="tooltip" title="Enter your first name" required>
+				    <div class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+				</div>
+
+			    <div class="mb-3">
+					<label for="lastName" class="form-label">Last Name</label>
+					<input type="text" th:field="*{lastName}" placeholder="e.g., Doe"
+			               class="form-control" data-bs-toggle="tooltip" title="Enter your last name" required>
+              		<div class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+				</div>
+
+			   	<div class="mb-3">
+		           <label for="customerId" class="form-label">Customer ID</label>
+	               <input type="text" th:field="*{customerId}" placeholder="e.g., 10001"
+			              class="form-control" data-bs-toggle="tooltip" title="Unique ID for your account" required>
+			       <div class="text-danger" th:if="${#fields.hasErrors('customerId')}" th:errors="*{customerId}"></div>
+				</div>
+
+			    <div class="mb-3">
+					<label for="email" class="form-label">Email</label>
+			        <input type="email" th:field="*{email}" placeholder="e.g., john@example.com"
+			               class="form-control" data-bs-toggle="tooltip" title="We'll never share your email." required>
+				    <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+				</div>
+
+			    <div class="mb-3">
+					<label for="phoneNumber" class="form-label">Phone Number</label>
+			        <input type="text" th:field="*{phoneNumber}" placeholder="e.g., 123-456-7890"
+				           class="form-control" data-bs-toggle="tooltip" title="Enter a valid phone number" required>
+				    <div class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
+				</div>
+
+				<div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+				    <input type="text" th:field="*{username}" placeholder="Choose a username"
+				           class="form-control" data-bs-toggle="tooltip" title="Pick a unique username" required>
+				    <div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+				</div>
+
+				<div class="mb-3">
+					<label for="password" class="form-label">Password</label>
+				    <input type="password" th:field="*{password}" placeholder="Create a strong password"
+				           class="form-control" data-bs-toggle="tooltip" title="Use at least 6 characters" required>
+				    <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+				    </div>
+			
+				<!-- Submit button -->
+				<input class="btn btn-primary mt-3" type="submit" value="Update Vehicle" style="margin-top: 10px;" />
+	        </form>
+
+        	<div style="margin-top: 15px; text-align:center;">
+            	<a th:href="@{/customers/all}">← Return to Customer List</a>
+        	</div>
+    	</div>
+	</div>
+</body>
+</html>

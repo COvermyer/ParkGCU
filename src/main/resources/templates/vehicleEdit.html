@@ -7,57 +7,67 @@
     <title>Edit Vehicle</title>
 </head>
 <body>
-<div layout:fragment="content">
-    <div class="form-container" style="max-width: 600px; margin: auto;">
-        <h2>Edit Vehicle</h2>
+	<div layout:fragment="content">
+    	<div class="container mt-5 flex-container">
+        	<form th:action="@{/vehicles/update}" th:object="${vehicleModel}" method="post">
+            
+				<!-- Hidden fields -->
+				<input type="hidden" th:field="*{vehicleId}" />
+				<input type="hidden" th:field="*{customerId}" />
+				
+				<!-- Color -->
+				<div class="mb-3">
+					<label for="color" class="form-label">Color</label>
+					<input type="text" th:field="*{color}" placeholder="e.g. Blue"
+							class="form-control" data-bs-toggle="tooltip" title="Color of your vehicle" required/>
+					<div class="text-danger" th:if="${#fields.hasErrors('color')}" th:errors="*{color}"></div>
+				</div>
+				<!-- Year -->
+				<div class="mb-3">
+					<label for="year" class="form-label">Year</label>
+					<input type="number" th:field="*{year}" placeholder="e.g. Blue" min="1900" max="2099"
+							class="form-control" data-bs-toggle="tooltip" title="Year of production" required/>
+					<div class="text-danger" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+				</div>
+				<!-- Make -->
+				<div class="mb-3">
+					<label for="text" class="form-label">Make</label>
+					<input type="text" th:field="*{make}" placeholder="e.g. Jeep"
+							class="form-control" data-bs-toggle="tooltip" title="Make of Vehicle" required/>
+					<div class="text-danger" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+				</div>
+				<!-- Model -->
+				<div class="mb-3">
+					<label for="model" class="form-label">Model</label>
+					<input type="text" th:field="*{model}" placeholder="e.g. Patriot"
+							class="form-control" data-bs-toggle="tooltip" title="Vehicle Model" required/>
+					<div class="text-danger" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></div>
+				</div>
+				<!-- State -->
+				<div class="mb-3">
+					<label for="plateState" class="form-label">State</label>
+					<input type="text" th:field="*{plateState}" placeholder="e.g. AZ" 
+							class="form-control" data-bs-toggle="tooltip" title="State of Plate/Registration" required/>
+					<div class="text-danger" th:if="${#fields.hasErrors('plateState')}" th:errors="*{plateState}"></div>
+				</div>
+				<!-- Plate -->
+				<div class="mb-3">
+					<label for="plateNumber" class="form-label">Plate</label>
+					<input type="text" th:field="*{plateNumber}" placeholder="e.g. XXX000"
+							class="form-control" data-bs-toggle="tooltip" title="Plate number" required/>
+					<div class="text-danger" th:if="${#fields.hasErrors('plateNumber')}" th:errors="*{plateNumber}"></div>
+				</div>
+			
+				<!-- Submit button -->
+				<input class="btn btn-primary mt-3" type="submit" value="Update Vehicle" style="margin-top: 10px;" />	
 
-        <form th:action="@{/vehicles/update}" th:object="${vehicleModel}" method="post">
-            <!-- Hidden fields -->
-            <input type="hidden" th:field="*{vehicleId}" />
-            <input type="hidden" th:field="*{customerId}" />
+            	
+	        </form>
 
-            <table>
-                <tr>
-                    <td>Color:</td>
-                    <td><input type="text" th:field="*{color}" required /></td>
-                </tr>
-                <tr>
-                    <td>Year:</td>
-                    <td><input type="number" th:field="*{year}" required min="1900" max="2099" /></td>
-                </tr>
-                <tr>
-                    <td>Make:</td>
-                    <td><input type="text" th:field="*{make}" required /></td>
-                </tr>
-                <tr>
-                    <td>Model:</td>
-                    <td><input type="text" th:field="*{model}" required /></td>
-                </tr>
-                <tr>
-                    <td>Plate State:</td>
-                    <td><input type="text" th:field="*{plateState}" maxlength="2" required /></td>
-                </tr>
-                <tr>
-                    <td>Plate Number:</td>
-                    <td><input type="text" th:field="*{plateNumber}" required /></td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="text-align:center;">
-                        <input type="submit" value="Update Vehicle" />
-                    </td>
-                </tr>
-            </table>
-
-            <!-- Error display -->
-            <p th:if="${#fields.hasErrors('*')}" style="color:red;">
-                Please correct the errors in the form.
-            </p>
-        </form>
-
-        <div style="margin-top: 15px; text-align:center;">
-            <a th:href="@{/vehicles/all}">← Return to Vehicle List</a>
-        </div>
-    </div>
-</div>
+        	<div style="margin-top: 15px; text-align:center;">
+            	<a th:href="@{/vehicles/all}">← Return to Vehicle List</a>
+        	</div>
+    	</div>
+	</div>
 </body>
 </html>
