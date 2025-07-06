@@ -9,121 +9,137 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import com.gcu.ParkGcuApplication;
+
 import com.gcu.data.entity.VehicleEntity;
 import com.gcu.data.mapper.VehicleRowMapper;
 import com.gcu.data.repository.VehiclesRepository;
 
+/**
+ * VehiclesDataService handles data access for vehicle records using both Spring JDBC and Spring Data.
+ */
 @Service
 public class VehiclesDataService implements DataAccessInterface<VehicleEntity> {
 
-    private final ParkGcuApplication parkGcuApplication;
+    @Autowired
+    private VehiclesRepository vehiclesRepository;
 
-	@Autowired
-	private VehiclesRepository vehiclesRepository;
-	private DataSource datasource;
-	private JdbcTemplate jdbcTemplateObject;
-	
-	/**
-	 * Non-default constructor for CI
-	 * @param vehicleRepository
-	 * @param datasource
-	 * @param jdbcTemplateObject
-	 */
-	public VehiclesDataService(VehiclesRepository vehiclesRepository, DataSource datasource, JdbcTemplate jdbcTemplateObject, ParkGcuApplication parkGcuApplication) 
-	{
-		this.vehiclesRepository = vehiclesRepository;
-		this.datasource = datasource;
-		this.jdbcTemplateObject = jdbcTemplateObject;
-		this.parkGcuApplication = parkGcuApplication;
-	}
+    private final JdbcTemplate jdbcTemplateObject;
 
-	@Override
-	public List<VehicleEntity> findAll() {
-		List<VehicleEntity> vehicles = new ArrayList<VehicleEntity>();
-		try
-		{
-			// Get all vehicle entities
-			Iterable<VehicleEntity> vehiclesIterable = vehiclesRepository.findAll();
-			
-			// Convert to a list and return
-			vehiclesIterable.forEach(vehicles::add);
-		} catch (Exception e) { e.printStackTrace(); }
-		
-		return vehicles;
-	}
+    /**
+     * Constructor injection for DAO components.
+     */
+    public VehiclesDataService(VehiclesRepository vehiclesRepository, DataSource dataSource, JdbcTemplate jdbcTemplateObject) {
+        this.vehiclesRepository = vehiclesRepository;
+        this.jdbcTemplateObject = jdbcTemplateObject;
+    }
 
-	@Override
-	public VehicleEntity findById(int id) {
-		VehicleEntity vehicle = null;
-		
-		String sql = "SELECT * FROM vehicles WHERE vehicleId = ?";
-		try {
-			List<VehicleEntity> results = jdbcTemplateObject.query(sql, new VehicleRowMapper(), id);
-			if(results.size() == 1)
-				vehicle = results.get(0);	
-		} catch (Exception e) { e.printStackTrace(); }
-		
-		return vehicle;
-	}
-	
-	/**
-	 * Returns a list of vehicles based on their associated customer id
-	 * @param id
-	 * @return
-	 */
-	public List<VehicleEntity> findByCustomerId(int id)
-	{
-		List<VehicleEntity> vehicles = null;
-		String sql = "SELECT * FROM vehicles where customerId = ?";
-		try
-		{
-			vehicles = jdbcTemplateObject.query(sql, new VehicleRowMapper(), id);
-		} catch (Exception e) { e.printStackTrace(); }
-		return vehicles;
-	}
+    @Override
+    public List<VehicleEntity> findAll() {
+        List<VehicleEntity> vehicles = new ArrayList<>();
+        try {
+            vehiclesRepository.findAll().forEach(vehicles::add);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return vehicles;
+    }
 
-	@Override
-	public boolean create(VehicleEntity vehicle) 
-	{		
-		String sql = "INSERT INTO vehicles (customerId, color, year, make, model, plateState, plateNumber) values (?, ?, ?, ?, ?, ?, ?)";
-		int num = -1;
-		try
-		{
-			num = jdbcTemplateObject.update(sql,
-					vehicle.getCustomerId(),
-					vehicle.getColor(),
-					vehicle.getYear(),
-					vehicle.getMake(),
-					vehicle.getModel(),
-					vehicle.getPlateState(),
-					vehicle.getPlateNumber());
-		} catch(DataAccessException d) { num = 0; }
-		catch (Exception e) { e.printStackTrace(); }
-		
-		System.out.println("Rows affected: " + num);
-		
-		return (num == 1) ? true : false;
-	}
+    @Override
+    public VehicleEntity findById(int id) {
+        String sql = "SELECT * FROM vehicles WHERE vehicleId = ?";
+        try {
+            List<VehicleEntity> result = jdbcTemplateObject.query(sql, new VehicleRowMapper(), id);
+            return result.isEmpty() ? null : result.get(0);
+        } catch (Exception e) {
+            System.err.println("Error finding vehicle by ID: " + id);
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-	@Override
-	public boolean update(VehicleEntity t) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    public List<VehicleEntity> findByCustomerId(int customerId) {
+        String sql = "SELECT * FROM vehicles WHERE customerId = ?";
+        try {
+            return jdbcTemplateObject.query(sql, new VehicleRowMapper(), customerId);
+        } catch (Exception e) {
+            System.err.println("Error finding vehicles by customer ID: " + customerId);
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
 
-	@Override
-	public boolean delete(VehicleEntity vehicle) {
-		String sql = "DELETE FROM vehicles WHERE vehicleId = ?";
-		int num = -1;
-		try
-		{
-			num = jdbcTemplateObject.update(sql, vehicle.getVehicleId());
-		} 
-		catch (DataAccessException d) { num = 0; }
-		catch (Exception e) { e.printStackTrace(); }
-		
-		return (num <= 1) ? true : false;
-	}
+    @Override
+    public boolean create(VehicleEntity vehicle) {
+        String sql = "INSERT INTO vehicles (customerId, color, year, make, model, plateState, plateNumber) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try {
+            int rows = jdbcTemplateObject.update(sql,
+                vehicle.getCustomerId(),
+                vehicle.getColor(),
+                vehicle.getYear(),
+                vehicle.getMake(),
+                vehicle.getModel(),
+                vehicle.getPlateState(),
+                vehicle.getPlateNumber());
+            return rows == 1;
+        } catch (DataAccessException dae) {
+            System.err.println("Error creating vehicle record.");
+            dae.printStackTrace();
+            return false;
+        }
+    }
 
+    @Override
+    public boolean update(VehicleEntity vehicle) {
+        String sql = "UPDATE vehicles SET color = ?, year = ?, make = ?, model = ?, plateState = ?, plateNumber = ? WHERE vehicleId = ?";
+        try {
+            int rows = jdbcTemplateObject.update(sql,
+                vehicle.getColor(),
+                vehicle.getYear(),
+                vehicle.getMake(),
+                vehicle.getModel(),
+                vehicle.getPlateState(),
+                vehicle.getPlateNumber(),
+                vehicle.getVehicleId());
+            return rows == 1;
+        } catch (DataAccessException dae) {
+            System.err.println("Error updating vehicle with ID: " + vehicle.getVehicleId());
+            dae.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Delete a vehicle by ID.
+     */
+    @Override
+    public boolean deleteById(int id) {
+        String sql = "DELETE FROM vehicles WHERE vehicleId = ?";
+        try {
+            int rowsAffected = jdbcTemplateObject.update(sql, id);
+            if (rowsAffected > 0) {
+                System.out.println("✅ Vehicle deleted with ID: " + id);
+                return true;
+            } else {
+                System.out.println("❌ No vehicle found to delete with ID: " + id);
+                return false;
+            }
+        } catch (Exception e) {
+            System.err.println("Error deleting vehicle with ID: " + id);
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Delete a vehicle by object.
+     */
+    @Override
+    public boolean delete(VehicleEntity vehicle) {
+        if (vehicle == null || vehicle.getVehicleId() <= 0) {
+            System.out.println("❌ Invalid vehicle entity provided for deletion.");
+            return false;
+        }
+        return deleteById(vehicle.getVehicleId());
+    }
 }
+

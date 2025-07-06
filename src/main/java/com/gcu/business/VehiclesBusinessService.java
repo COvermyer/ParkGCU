@@ -10,91 +10,108 @@ import com.gcu.data.entity.VehicleEntity;
 import com.gcu.model.VehicleModel;
 
 /**
- * Service to handle Vehicle DB pulls
+ * Business service layer for vehicle-related operations.
  */
 public class VehiclesBusinessService implements VehiclesBusinessServiceInterface {
 
-	@Autowired
-	VehiclesDataService service;
-	
-	/**
-	 * Initialization method for service
-	 */
-	@Override
-	public void init() {
-		System.out.println("Vehicle Business Service initialized.");
-	}
+    @Autowired
+    private VehiclesDataService service;
 
-	/**
-	 * get method to get all registered vehicles
-	 */
-	@Override
-	public List<VehicleModel> getVehicles() 
-	{
-		List<VehicleEntity> vehiclesEntity = service.findAll();
-		List<VehicleModel> vehiclesDomain = new ArrayList<VehicleModel>();
-		for (VehicleEntity e : vehiclesEntity)
-			vehiclesDomain.add(new VehicleModel(e.getCustomerId(),
-												e.getVehicleId(),
-												e.getColor(),
-												e.getYear(),
-												e.getMake(),
-												e.getModel(),
-												e.getPlateState(),
-												e.getPlateNumber()));		
-		
-		return vehiclesDomain;
-	}
+    @Override
+    public void init() {
+        System.out.println("Vehicle Business Service initialized.");
+    }
 
-	/**
-	 * get Method to get vehicles based on a specific customerId
-	 */
-	@Override
-	public List<VehicleModel> getVehiclesByCustomerId(String customerId) 
-	{
-		List<VehicleEntity> vehiclesEntity = service.findByCustomerId(Integer.valueOf(customerId));
-		List<VehicleModel> vehiclesDomain = new ArrayList<VehicleModel>();
-		for (VehicleEntity e : vehiclesEntity)
-			vehiclesDomain.add(new VehicleModel(e.getCustomerId(),
-												e.getVehicleId(),
-												e.getColor(),
-												e.getYear(),
-												e.getMake(),
-												e.getModel(),
-												e.getPlateState(),
-												e.getPlateNumber()));		
-		
-		return vehiclesDomain;
-	}
-	
-	/**
-	 *  Method to add a vehicle to DB
-	 */
-	@Override
-	public boolean addVehicle(VehicleModel vehicle)
-	{
-		return service.create(new VehicleEntity(vehicle.getCustomerId(),
-											0,
-											vehicle.getColor(),
-											vehicle.getYear(),
-											vehicle.getMake(),
-											vehicle.getModel(),
-											vehicle.getPlateState(),
-											vehicle.getPlateNumber()));
-	}
+    @Override
+    public List<VehicleModel> getVehicles() {
+        List<VehicleEntity> vehiclesEntity = service.findAll();
+        List<VehicleModel> vehiclesDomain = new ArrayList<>();
 
-	@Override
-	public boolean deleteVehicleById(int id) {
-		// Create an empty vehicle entity with the given ID.
-		VehicleEntity ve = new VehicleEntity(0, id, "", 0, "", "", "", "");
-		return service.delete(ve);
-	}
-	
-	/**
-	 * Destruction method for service.
-	 */
-	@Override
-	public void destroy() {
-		System.out.println("Vehicle Business Service terminated.");
-	}
+        for (VehicleEntity e : vehiclesEntity) {
+            vehiclesDomain.add(convertToModel(e));
+        }
+
+        return vehiclesDomain;
+    }
+
+    @Override
+    public List<VehicleModel> getVehiclesByCustomerId(String customerId) {
+        List<VehicleEntity> vehiclesEntity = service.findByCustomerId(Integer.parseInt(customerId));
+        List<VehicleModel> vehiclesDomain = new ArrayList<>();
+
+        for (VehicleEntity e : vehiclesEntity) {
+            vehiclesDomain.add(convertToModel(e));
+        }
+
+        return vehiclesDomain;
+    }
+
+    @Override
+    public boolean addVehicle(VehicleModel vehicle) {
+        VehicleEntity entity = new VehicleEntity(
+            vehicle.getCustomerId(),
+            0,
+            vehicle.getColor(),
+            vehicle.getYear(),
+            vehicle.getMake(),
+            vehicle.getModel(),
+            vehicle.getPlateState(),
+            vehicle.getPlateNumber()
+        );
+        return service.create(entity);
+    }
+
+    @Override
+    public boolean deleteVehicleById(int id) {
+        VehicleEntity vehicle = service.findById(id);
+        if (vehicle == null) {
+            System.out.println("Vehicle not found in DB for deletion with ID: " + id);
+            return false;
+        }
+        return service.delete(vehicle);
+    }
+
+
+    /**
+     * Retrieve a single vehicle by its ID.
+     */
+    public VehicleModel getVehicleById(int id) {
+        VehicleEntity entity = service.findById(id);
+        return entity != null ? convertToModel(entity) : null;
+    }
+
+    /**
+     * Update an existing vehicle.
+     */
+    public boolean updateVehicle(VehicleModel vehicle) {
+        VehicleEntity entity = new VehicleEntity(
+            vehicle.getCustomerId(),
+            vehicle.getVehicleId(),
+            vehicle.getColor(),
+            vehicle.getYear(),
+            vehicle.getMake(),
+            vehicle.getModel(),
+            vehicle.getPlateState(),
+            vehicle.getPlateNumber()
+        );
+        return service.update(entity);
+    }
+
+    private VehicleModel convertToModel(VehicleEntity e) {
+        return new VehicleModel(
+            e.getCustomerId(),
+            e.getVehicleId(),
+            e.getColor(),
+            e.getYear(),
+            e.getMake(),
+            e.getModel(),
+            e.getPlateState(),
+            e.getPlateNumber()
+        );
+    }
+
+    @Override
+    public void destroy() {
+        System.out.println("Vehicle Business Service terminated.");
+    }
 }

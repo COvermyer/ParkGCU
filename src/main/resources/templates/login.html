@@ -1,30 +1,59 @@
-<html xmlns:th="https://www.thymeleaf.org" xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/defaultLayout}">
-	<head>
-		<meta charset="UTF-8">
-		<title>User Login</title>
-		<link rel="stylesheet" href="styles.css">
-	</head>
-	<body>
-		<div layout:fragment="content">
-			<div class="login-container">
-				<form action="#" th:action="@{doLogin}" th:object="${loginModel}" method="post">
-					<table class="login">
-						<tr>
-							<td>Username:</td>
-							<td><input type="text" th:field="*{username}" th:classappend="${#fields.hasErrors('username') ? 'login-failed' : ''}"/></td>
-						</tr>
-						<tr>
-							<td>Password:</td>
-							<td><input type="password" th:field="*{password}" th:classappend="${#fields.hasErrors('password') ? 'login-failed' : ''}"/></td>
-						</tr>
-						<tr>
-							<td colspan="2"><input type="submit" value="Submit"/></td>
-						</tr>
-					</table>
-					<h5 style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</h5>
-					<h5 style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</h5> 
-				</form>
-			</div>
-		</div>
-	</body>
+<html xmlns:th="https://www.thymeleaf.org" 
+      xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layouts/defaultLayout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Login</title>
+    <link rel="stylesheet" href="styles.css" th:href="@{/styles.css}" />
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="login-container">
+        
+        <form th:action="@{/login/doLogin}" th:object="${loginModel}" method="post">
+            <table class="login">
+                <tr>
+                    <td>Username:</td>
+                    <td>
+                        <input type="text" th:field="*{username}"
+                               th:classappend="${#fields.hasErrors('username')} ? 'login-failed' : ''"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td>
+                        <input type="password" th:field="*{password}"
+                               th:classappend="${#fields.hasErrors('password')} ? 'login-failed' : ''"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center;">
+                        <input type="submit" value="Login"/>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Field error messages -->
+            <div th:if="${#fields.hasErrors('username')}" style="color:red; text-align:center;">
+                <p th:errors="*{username}">Username error</p>
+            </div>
+            <div th:if="${#fields.hasErrors('password')}" style="color:red; text-align:center;">
+                <p th:errors="*{password}">Password error</p>
+            </div>
+
+            <!-- General login failure -->
+            <div th:if="${loginError}" style="color:red; text-align:center;">
+                <p th:text="${loginError}">Invalid login</p>
+            </div>
+
+            <!-- Optional link to registration -->
+            <div style="text-align:center; margin-top:10px;">
+                <a th:href="@{/customers/new}">Don't have an account? Register here</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
 </html>

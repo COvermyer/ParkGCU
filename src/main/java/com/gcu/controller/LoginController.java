@@ -1,49 +1,66 @@
 package com.gcu.controller;
 
+import com.gcu.business.SecurityBusinessServiceInterface;
+import com.gcu.business.VehiclesBusinessServiceInterface;
+import com.gcu.model.LoginModel;
+import com.gcu.model.VehicleModel;
+
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import com.gcu.business.SecurityBusinessServiceInterface;
-import com.gcu.model.CustomerModel;
-import com.gcu.model.LoginModel;
-
-import jakarta.validation.Valid;
+import java.util.List;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/login")
 public class LoginController {
 
-	@Autowired
-	SecurityBusinessServiceInterface security;
-	
-	@GetMapping("/")
-	public String displayLogin(Model model)
-	{
-		model.addAttribute("title", "User Login");
-		model.addAttribute("loginModel", new LoginModel());
-		return "login";
-	}
-	
-	@PostMapping("/doLogin")
-	public String doLogin(@Valid LoginModel loginModel, BindingResult bindingResult, Model model)
-	{
-		if (bindingResult.hasErrors() || !security.authenticate(loginModel.getUsername(), loginModel.getPassword()))
-		{
-			model.addAttribute("title", "User Login");
-			System.out.println("failed login detected");
-			return "login";
-		}
-		
-		model.addAttribute("title", "Customer Info");
-		model.addAttribute("customerModel", new CustomerModel());
+    @Autowired
+    private SecurityBusinessServiceInterface security;
 
-		return "customerInfo"; // FIXME
-	}
-	
+    @Autowired
+    private VehiclesBusinessServiceInterface vehicleService;
 
+    /**
+     * Display login form at /login or /login/
+     */
+    @GetMapping({"", "/"})
+    public String displayLoginForm(Model model) {
+        model.addAttribute("title", "Login Form");
+        model.addAttribute("loginModel", new LoginModel());
+        return "login";  // login.html view
+    }
+
+    /**
+     * Process login form submission at /login/doLogin
+     */
+    @PostMapping("/doLogin")
+    public String processLogin(@Valid @ModelAttribute("loginModel") LoginModel loginModel,
+                               BindingResult bindingResult,
+                               Model model) {
+
+        model.addAttribute("title", "Login Form");
+
+        // Check form validation
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("error", "Form validation failed.");
+            return "login";
+        }
+
+        // Authenticate user
+        if (!security.authenticate(loginModel.getUsername(), loginModel.getPassword())) {
+            model.addAttribute("error", "Invalid username or password.");
+            return "login";
+        }
+
+        // On success - show vehicles
+        List<VehicleModel> vehicles = vehicleService.getVehicles();
+        model.addAttribute("title", "Registered Vehicles");
+        model.addAttribute("registeredVehicles", vehicles);
+
+        return "vehicles";  // vehicles.html view
+    }
 }

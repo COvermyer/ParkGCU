@@ -1,17 +1,20 @@
 package com.gcu.business;
 
 import java.util.List;
-
 import com.gcu.model.CustomerModel;
 
 /**
- * Interface designs the contract for CustomersBusinessService
+ * Interface defines the contract for CustomerBusinessService
  */
 public interface CustomersBusinessServiceInterface {
-
-	public void init();
-	public List<CustomerModel> getCustomers();
-	public CustomerModel getCustomerById(String customerId);
-	public boolean addCustomer(CustomerModel customer);
-	public void destroy();
+    
+    void init();
+    List<CustomerModel> getCustomers();
+    CustomerModel getCustomerById(String customerId);
+    boolean addCustomer(CustomerModel customer);
+    boolean updateCustomer(CustomerModel customer);  //  Added
+    boolean deleteCustomer(int id); 
+    public void deleteCustomerById(int id);
+                                                     
+    void destroy();
 }

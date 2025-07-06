@@ -8,10 +8,13 @@ import com.gcu.model.VehicleModel;
  * Interface defines behaviors for VehicleBusinessService
  */
 public interface VehiclesBusinessServiceInterface {
-	public void init();
-	public List<VehicleModel> getVehicles();
-	public List<VehicleModel> getVehiclesByCustomerId(String customerId);
-	public boolean addVehicle(VehicleModel vehicle);
-	public boolean deleteVehicleById(int id);
-	public void destroy();
+    void init();
+    List<VehicleModel> getVehicles();
+    List<VehicleModel> getVehiclesByCustomerId(String customerId);
+    boolean addVehicle(VehicleModel vehicle);
+    boolean deleteVehicleById(int id);
+    boolean updateVehicle(VehicleModel vehicle); // ✅ Add this
+    void destroy();
+    VehicleModel getVehicleById(int id);
+
 }

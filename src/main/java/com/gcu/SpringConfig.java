@@ -15,20 +15,15 @@ import com.gcu.business.VehiclesBusinessServiceInterface;
 public class SpringConfig {
 
 	@Bean(name="securityBusinessService", initMethod="init", destroyMethod="destroy")
-	SecurityBusinessServiceInterface getSecurityService()
-	{
+	SecurityBusinessServiceInterface getSecurityService() {
 		return new SecurityBusinessService();
 	}
+
 	
-	@Bean(name="customerBusinessService", initMethod="init", destroyMethod="destroy")
-	CustomersBusinessServiceInterface getCustomerBusinessService()
-	{
-		return new CustomerBusinessService();
-	}
 	
+
 	@Bean(name="vehicleBusinessService", initMethod="init", destroyMethod="destroy")
-	VehiclesBusinessServiceInterface getVehicleBusinessService()
-	{
+	VehiclesBusinessServiceInterface getVehicleBusinessService() {
 		return new VehiclesBusinessService();
 	}
 }

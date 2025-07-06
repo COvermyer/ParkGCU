@@ -5,59 +5,63 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.gcu.data.CustomersDataService;
 
 /**
- * Security service for running user authentications
+ * Security service for running user authentications.
  */
 public class SecurityBusinessService implements SecurityBusinessServiceInterface {
 
-	private int authenticatedCustomerId;
+    private int authenticatedCustomerId = -1;
 
-	@Autowired
-	CustomersDataService service;
-	
-	/**
-	 * Start up method for Security Business Service
-	 */
-	@Override
-	public void init() {
-		System.out.println("Security Service initialized.");
+    @Autowired
+    private CustomersDataService service;
 
-	}
+    /**
+     * Initialization logic (optional, tied to initMethod in SpringConfig)
+     */
+    @Override
+    public void init() {
+        System.out.println("SecurityBusinessService initialized.");
+    }
 
-	/**
-	 * Authenticates the login credentials provided by the user
-	 * @param username
-	 * @param password
-	 * @return Boolean result indicating if the credentials are valid.
-	 */
-	@Override
-	public boolean authenticate(String username, String password) {
-		
-		int possible = service.validateUserLogin(username, password);
-		
-		if (possible == -1)
-			return false;
-		else
-		{
-			setAuthenticatedCustomerId(possible);
-			return true;
-		}
-	}
+    /**
+     * Authenticates the login credentials provided by the user
+     *
+     * @param username The input username
+     * @param password The input password
+     * @return true if authentication is successful, false otherwise
+     */
+    @Override
+    public boolean authenticate(String username, String password) {
+        if (username == null || password == null) {
+            System.out.println("Authentication failed: username or password is null");
+            return false;
+        }
 
-	/**
-	 * Destruction method for Security Business Service
-	 */
-	@Override
-	public void destroy() {
-		System.out.println("Security Service terminated.");
+        int customerId = service.validateUserLogin(username, password);
 
-	}
+        if (customerId <= 0) {
+            System.out.println("Authentication failed: invalid credentials");
+            return false;
+        }
 
-	public int getAuthenticatedCustomerId() {
-		return authenticatedCustomerId;
-	}
+        this.authenticatedCustomerId = customerId;
+        System.out.println("Authentication success: customer ID " + customerId);
+        return true;
+    }
 
-	public void setAuthenticatedCustomerId(int authenticatedCustomerId) {
-		this.authenticatedCustomerId = authenticatedCustomerId;
-	}
+    /**
+     * Cleanup or termination logic (tied to destroyMethod in SpringConfig)
+     */
+    @Override
+    public void destroy() {
+        System.out.println("SecurityBusinessService terminated.");
+    }
 
+    /**
+     * Get the authenticated customer ID
+     *
+     * @return ID of the authenticated customer
+     */
+    public int getAuthenticatedCustomerId() {
+        return authenticatedCustomerId;
+    }
 }
