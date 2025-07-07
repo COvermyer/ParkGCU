@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.gcu.data.CustomersDataService;
@@ -54,7 +55,7 @@ public class CustomerBusinessService implements CustomersBusinessServiceInterfac
         return service.create(new CustomerEntity(
             customer.getCustomerId(), customer.getFirstName(), customer.getLastName(),
             customer.getEmail(), customer.getPhoneNumber(),
-            customer.getUsername(), customer.getPassword()
+            customer.getUsername(), new BCryptPasswordEncoder().encode(customer.getPassword())
         ));
     }
 
@@ -63,7 +64,7 @@ public class CustomerBusinessService implements CustomersBusinessServiceInterfac
         return service.update(new CustomerEntity(
             customer.getCustomerId(), customer.getFirstName(), customer.getLastName(),
             customer.getEmail(), customer.getPhoneNumber(),
-            customer.getUsername(), customer.getPassword()
+            customer.getUsername(), new BCryptPasswordEncoder().encode(customer.getPassword())
         ));
     }
 

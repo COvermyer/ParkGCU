@@ -18,8 +18,12 @@
 						<li><a th:href="@{/vehicles/all}">Vehicles</a></li>
 						<li><a th:href="@{/vehicles/new}">New Vehicles</a></li>
 					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li><a th:href="@{/login}">Home</a></li>
+					<ul class="nav navbar-nav navbar-right d-flex align-items-center">
+						<li class="nav-item h-100">
+							<form th:action="@{/logout}" method="post">
+								<input type="submit" value="Logout" class="btn btn-danger"/>
+							</form>
+						</li>
 					</ul>
 				</div>
 			</nav>

@@ -1,0 +1,22 @@
+<html xmlns:th="https://www.thymeleaf.org" 
+      xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layouts/defaultLayout}">
+
+	<head>
+    	<meta charset="UTF-8">
+    	<title>User Login</title>
+    	<link rel="stylesheet" href="styles.css" th:href="@{/styles.css}" />
+	</head>
+
+	<body>
+		<div layout:fragment="content">
+			<H3>Welcome to ParkGCU!</H3>
+			
+			
+			<!-- Optional link to login -->
+			<div style="text-align:center; margin-top:10px;">
+				<a th:href="@{/login}">Login</a>
+			</div>
+		</div>
+	</body>
+</html>
