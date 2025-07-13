@@ -39,10 +39,7 @@ public class CustomersDataService implements DataAccessInterface<CustomerEntity>
         try {
             List<CustomerEntity> results = jdbcTemplate.query(sql, new CustomerRowMapper(), id);
             if (!results.isEmpty()) {
-                System.out.println("Customer found in DB: " + results.get(0));
                 return results.get(0);
-            } else {
-                System.out.println("No customer found with ID: " + id);
             }
         } catch (Exception e) {
             e.printStackTrace();

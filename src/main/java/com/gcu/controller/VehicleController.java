@@ -22,14 +22,14 @@ import jakarta.validation.Valid;
 public class VehicleController {
 
     @Autowired
-    private VehiclesBusinessServiceInterface vehiclesService;
+    private VehiclesBusinessServiceInterface vehicleBusinessService;
 
     /**
      * Display all registered vehicles.
      */
     @GetMapping("/all")
     public String displayVehicles(Model model) {
-        List<VehicleModel> vehicles = vehiclesService.getVehicles();
+        List<VehicleModel> vehicles = vehicleBusinessService.getVehicles();
         model.addAttribute("title", "Registered Vehicles");
         model.addAttribute("registeredVehicles", vehicles);
         return "vehicles"; // Thymeleaf view name
@@ -60,7 +60,7 @@ public class VehicleController {
             return "vehicleRegistration";
         }
 
-        boolean added = vehiclesService.addVehicle(vehicleModel);
+        boolean added = vehicleBusinessService.addVehicle(vehicleModel);
         if (added) {
             redirectAttributes.addFlashAttribute("message", "Vehicle registered successfully!");
             return "redirect:/vehicles/all";
@@ -75,7 +75,7 @@ public class VehicleController {
      */
     @GetMapping("/edit/{id}")
     public String displayEditVehicle(@PathVariable("id") int id, Model model, RedirectAttributes redirectAttributes) {
-        VehicleModel vehicle = vehiclesService.getVehicleById(id);
+        VehicleModel vehicle = vehicleBusinessService.getVehicleById(id);
         if (vehicle == null) {
             redirectAttributes.addFlashAttribute("error", "Vehicle not found.");
             return "redirect:/vehicles/all";
@@ -101,7 +101,7 @@ public class VehicleController {
             return "vehicleEdit";
         }
 
-        boolean updated = vehiclesService.updateVehicle(vehicleModel);
+        boolean updated = vehicleBusinessService.updateVehicle(vehicleModel);
         if (updated) {
             redirectAttributes.addFlashAttribute("message", "Vehicle updated successfully!");
         } else {
@@ -115,7 +115,7 @@ public class VehicleController {
      */
     @GetMapping("/delete/{id}")
     public String deleteVehicle(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
-        boolean success = vehiclesService.deleteVehicleById(id);
+        boolean success = vehicleBusinessService.deleteVehicleById(id);
 
         if (success) {
             redirectAttributes.addFlashAttribute("message", "Vehicle deleted successfully!");

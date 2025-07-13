@@ -32,11 +32,11 @@
                     <td style="text-align:center;" colspan="6">No registered customer</td>
                 </tr>
                 <tr th:each="customer : ${registeredCustomers}">
-                    <td style="text-align:center;"><span th:text="${customer.firstName}">First</span></td>
-                    <td style="text-align:center;"><span th:text="${customer.lastName}">Last</span></td>
-                    <td style="text-align:center;"><span th:text="${customer.customerId}">ID</span></td>
-                    <td style="text-align:center;"><span th:text="${customer.phoneNumber}">Phone</span></td>
-                    <td style="text-align:center;"><span th:text="${customer.email}">Email</span></td>
+                    <td style="text-align:center;"><a th:href="@{/customers/info/{customerId}(customerId=${customer.customerId})}"><span th:text="${customer.firstName}">First</span></a></td>
+                    <td style="text-align:center;"><a th:href="@{/customers/info/{customerId}(customerId=${customer.customerId})}"><span th:text="${customer.lastName}">Last</span></a></td>
+                    <td style="text-align:center;"><a th:href="@{/customers/info/{customerId}(customerId=${customer.customerId})}"><span th:text="${customer.customerId}">ID</span></a></td>
+                    <td style="text-align:center;"><a th:href="@{/customers/info/{customerId}(customerId=${customer.customerId})}"><span th:text="${customer.phoneNumber}">Phone</span></a></td>
+                    <td style="text-align:center;"><a th:href="@{/customers/info/{customerId}(customerId=${customer.customerId})}"><span th:text="${customer.email}">Email</span></a></td>
                     <td style="text-align:center;">
                         <a th:href="@{/customers/edit/{id}(id=${customer.customerId})}" class="btn btn-primary">Edit</a>
                         <a th:href="@{/customers/delete/{id}(id=${customer.customerId})}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>

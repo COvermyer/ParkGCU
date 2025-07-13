@@ -37,7 +37,8 @@ public interface VehiclesRepository extends CrudRepository<VehicleEntity, Intege
      * @param vehicle the vehicle to save
      * @return the saved VehicleEntity
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     VehicleEntity save(VehicleEntity vehicle);
 
     /**

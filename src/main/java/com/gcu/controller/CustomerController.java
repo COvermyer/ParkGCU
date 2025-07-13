@@ -36,18 +36,6 @@ public class CustomerController {
         return "customerInfo";
     }
 
-    @GetMapping("/test")
-    public String test(Model model) {
-        model.addAttribute("title", "Customer Info");
-        CustomerModel cm = new CustomerModel();
-        cm.setFirstName("Caleb");
-        cm.setLastName("Overmyer");
-        cm.setCustomerId(63596);
-        model.addAttribute("customerModel", cm);
-        model.addAttribute("registeredVehicles", vehiclesService.getVehicles());
-        return "customerInfo";
-    }
-
     @GetMapping("/all")
     public String displayAll(Model model) {
         List<CustomerModel> registeredCustomers = customersService.getCustomers();
@@ -76,8 +64,8 @@ public class CustomerController {
         return "redirect:/login";
     }
 
-    @GetMapping("/ci")
-    public String displayCustomerInfo(@RequestParam("customerId") String customerId, Model model) {
+    @GetMapping("/info/{customerId}")
+    public String displayCustomerInfo(@PathVariable String customerId, Model model) {
         model.addAttribute("title", "Customer Info");
         model.addAttribute("customerModel", customersService.getCustomerById(customerId));
         model.addAttribute("registeredVehicles", vehiclesService.getVehiclesByCustomerId(customerId));

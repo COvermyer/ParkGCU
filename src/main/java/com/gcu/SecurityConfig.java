@@ -23,6 +23,7 @@ public class SecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception
 	{
 		return http.csrf(csrf -> csrf.disable())
+				.httpBasic(Customizer.withDefaults())
 				.userDetailsService(service)
 				.authorizeHttpRequests(authz -> authz
 						.requestMatchers("/services/**").authenticated()

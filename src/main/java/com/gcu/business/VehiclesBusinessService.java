@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.gcu.data.VehiclesDataService;
 import com.gcu.data.entity.VehicleEntity;
@@ -12,6 +13,7 @@ import com.gcu.model.VehicleModel;
 /**
  * Business service layer for vehicle-related operations.
  */
+@Service
 public class VehiclesBusinessService implements VehiclesBusinessServiceInterface {
 
     @Autowired
@@ -85,28 +87,28 @@ public class VehiclesBusinessService implements VehiclesBusinessServiceInterface
      */
     public boolean updateVehicle(VehicleModel vehicle) {
         VehicleEntity entity = new VehicleEntity(
-            vehicle.getCustomerId(),
-            vehicle.getVehicleId(),
-            vehicle.getColor(),
-            vehicle.getYear(),
-            vehicle.getMake(),
-            vehicle.getModel(),
-            vehicle.getPlateState(),
-            vehicle.getPlateNumber()
+        		vehicle.getVehicleId(),
+        		vehicle.getCustomerId(),
+        		vehicle.getColor(),
+        		vehicle.getYear(),
+        		vehicle.getMake(),
+        		vehicle.getModel(),
+        		vehicle.getPlateState(),
+        		vehicle.getPlateNumber()
         );
         return service.update(entity);
     }
 
     private VehicleModel convertToModel(VehicleEntity e) {
         return new VehicleModel(
-            e.getCustomerId(),
-            e.getVehicleId(),
-            e.getColor(),
-            e.getYear(),
-            e.getMake(),
-            e.getModel(),
-            e.getPlateState(),
-            e.getPlateNumber()
+        		e.getVehicleId(),
+        		e.getCustomerId(),
+        		e.getColor(),
+        		e.getYear(),
+        		e.getMake(),
+        		e.getModel(),
+        		e.getPlateState(),
+        		e.getPlateNumber()
         );
     }
 
