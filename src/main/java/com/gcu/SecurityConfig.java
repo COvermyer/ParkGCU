@@ -12,6 +12,9 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.gcu.business.UserBusinessService;
 
+/**
+ * SecurtiyConfig class defines http proptocols for user authentication
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {

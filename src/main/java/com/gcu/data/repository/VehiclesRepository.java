@@ -10,8 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.gcu.data.entity.VehicleEntity;
 
 /**
- * Repository interface for Vehicle operations using Spring Data JDBC.
- * Provides CRUD operations and custom SQL queries if needed.
+ * CRUD REPOSITORY instance for customers table of MySQL database
  */
 @Repository
 public interface VehiclesRepository extends CrudRepository<VehicleEntity, Integer> {

@@ -33,6 +33,9 @@ public class VehiclesDataService implements DataAccessInterface<VehicleEntity> {
         this.jdbcTemplateObject = jdbcTemplateObject;
     }
 
+    /**
+     * CRUD find all vehicles in DB
+     */
     @Override
     public List<VehicleEntity> findAll() {
         List<VehicleEntity> vehicles = new ArrayList<>();
@@ -44,6 +47,9 @@ public class VehiclesDataService implements DataAccessInterface<VehicleEntity> {
         return vehicles;
     }
 
+    /**
+     * CRUD find a vehicle by vehicle ID
+     */
     @Override
     public VehicleEntity findById(int id) {
         String sql = "SELECT * FROM vehicles WHERE vehicleId = ?";
@@ -57,6 +63,11 @@ public class VehiclesDataService implements DataAccessInterface<VehicleEntity> {
         }
     }
 
+    /**
+     * CRUD Find vehicles by customer ID
+     * @param customerId
+     * @return
+     */
     public List<VehicleEntity> findByCustomerId(int customerId) {
         String sql = "SELECT * FROM vehicles WHERE customerId = ?";
         try {
@@ -68,6 +79,9 @@ public class VehiclesDataService implements DataAccessInterface<VehicleEntity> {
         }
     }
 
+    /**
+     * CRUD add new Vehicle to DB
+     */
     @Override
     public boolean create(VehicleEntity vehicle) {
         String sql = "INSERT INTO vehicles (customerId, color, year, make, model, plateState, plateNumber) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -88,6 +102,9 @@ public class VehiclesDataService implements DataAccessInterface<VehicleEntity> {
         }
     }
 
+    /**
+     * CRUD update existing vehicles
+     */
     @Override
     public boolean update(VehicleEntity vehicle) {
         String sql = "UPDATE vehicles SET color = ?, year = ?, make = ?, model = ?, plateState = ?, plateNumber = ? WHERE vehicleId = ?";
@@ -109,7 +126,7 @@ public class VehiclesDataService implements DataAccessInterface<VehicleEntity> {
     }
 
     /**
-     * Delete a vehicle by ID.
+     * CRUD Delete a vehicle by ID.
      */
     @Override
     public boolean deleteById(int id) {
@@ -131,7 +148,7 @@ public class VehiclesDataService implements DataAccessInterface<VehicleEntity> {
     }
 
     /**
-     * Delete a vehicle by object.
+     * CRUD Delete a vehicle by object.
      */
     @Override
     public boolean delete(VehicleEntity vehicle) {

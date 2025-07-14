@@ -6,8 +6,14 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 import com.gcu.data.entity.CustomerEntity;
 
+/**
+ * RowMapper class for customers table of MySQL database 
+ */
 public class CustomerRowMapper implements RowMapper<CustomerEntity> {
 
+	/**
+	 * Mapping method for MySQL Database
+	 */
     @Override
     public CustomerEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new CustomerEntity(

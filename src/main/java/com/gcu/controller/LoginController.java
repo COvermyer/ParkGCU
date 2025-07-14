@@ -16,34 +16,4 @@ public class LoginController {
         model.addAttribute("title", "Login Form");
         return "login";  // login.html view
     }
-
-//    /**
-//     * Process login form submission at /login/doLogin
-//     */
-//    @PostMapping("/doLogin")
-//    public String processLogin(@Valid @ModelAttribute("loginModel") LoginModel loginModel,
-//                               BindingResult bindingResult,
-//                               Model model) {
-//
-//        model.addAttribute("title", "Login Form");
-//
-//        // Check form validation
-//        if (bindingResult.hasErrors()) {
-//            model.addAttribute("error", "Form validation failed.");
-//            return "login";
-//        }
-//
-//        // Authenticate user
-//        if (!security.authenticate(loginModel.getUsername(), loginModel.getPassword())) {
-//            model.addAttribute("error", "Invalid username or password.");
-//            return "login";
-//        }
-//
-//        // On success - show vehicles
-//        List<VehicleModel> vehicles = vehicleService.getVehicles();
-//        model.addAttribute("title", "Registered Vehicles");
-//        model.addAttribute("registeredVehicles", vehicles);
-//
-//        return "vehicles";  // vehicles.html view
-//    }
 }

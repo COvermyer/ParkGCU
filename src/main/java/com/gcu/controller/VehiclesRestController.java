@@ -23,12 +23,22 @@ public class VehiclesRestController {
 	@Autowired
 	VehiclesBusinessServiceInterface vehiclesService;
 	
+	/**
+	 * REST API method for returning a specific vehicle by vehicle ID
+	 * @param id A String containing a vehicle's unique ID number
+	 * @return VehicleModel as JSON
+	 */
 	@GetMapping(path="/vehicles/getVehicle/{id}", produces= {MediaType.APPLICATION_JSON_VALUE})
 	public VehicleModel getVehicleByVehicleId(@PathVariable int id)
 	{
 		return vehiclesService.getVehicleById(id);
 	}
 	
+	/**
+	 * REST API method for returning all vehicles associated with a Customer's CustomerID
+	 * @param id A String containing a customer's unique ID number
+	 * @return A List of VehicleModels
+	 */
 	@GetMapping(path="/vehicles/getVehiclesByCustomerId/{id}",  produces= {MediaType.APPLICATION_JSON_VALUE})
 	public List<VehicleModel> getVehiclesByCustomerId(@PathVariable String id)
 	{
@@ -36,8 +46,8 @@ public class VehiclesRestController {
 	}
 	
 	/**
-	 * Returns vehicles as JSON from the VehicleBusinessService
-	 * @return
+	 * REST API method to get all vehicles from database as JSON
+	 * @return Returns vehicles as JSON from the VehiclesBusinessService
 	 */
 	@GetMapping(path="/vehicles/getjson", produces= {MediaType.APPLICATION_JSON_VALUE})
 	public List<VehicleModel> getVehiclesAsJson()
@@ -46,8 +56,8 @@ public class VehiclesRestController {
 	}
 	
 	/**
-	 * Returns vehicles as XML from the VehicleBusinessService
-	 * @return
+	 * REST API method to get all vehicles from database as JSON
+	 * @return Returns vehicles as XML from the VehiclesBusinessService
 	 */
 	@GetMapping(path="/vehicles/getxml", produces= {MediaType.APPLICATION_XML_VALUE})
 	public VehicleList getVehiclesAsXml()

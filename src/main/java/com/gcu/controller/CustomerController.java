@@ -1,6 +1,5 @@
 package com.gcu.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import com.gcu.business.CustomersBusinessServiceInterface;
 import com.gcu.business.VehiclesBusinessServiceInterface;
 import com.gcu.model.CustomerModel;
-import com.gcu.model.VehicleModel;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -28,14 +26,11 @@ public class CustomerController {
     @Autowired
     VehiclesBusinessServiceInterface vehiclesService;
 
-    @GetMapping("/")
-    public String display(Model model) {
-        model.addAttribute("title", "Customer Info");
-        model.addAttribute("customerModel", new CustomerModel());
-        model.addAttribute("registeredVehicles", new ArrayList<VehicleModel>());
-        return "customerInfo";
-    }
-
+    /**
+     * method to display customers list display
+     * @param model
+     * @return
+     */
     @GetMapping("/all")
     public String displayAll(Model model) {
         List<CustomerModel> registeredCustomers = customersService.getCustomers();
@@ -44,6 +39,11 @@ public class CustomerController {
         return "customers";
     }
 
+    /**
+     * method to display "New Customer" page
+     * @param model
+     * @return
+     */
     @GetMapping("/new")
     public String displayNewCustomerPage(Model model) {
         model.addAttribute("title", "New Customer Registration");
@@ -51,6 +51,13 @@ public class CustomerController {
         return "customerRegistration";
     }
 
+    /**
+     * Method for POST passing new customers from customer registration
+     * @param customerModel
+     * @param bindingResult
+     * @param model
+     * @return
+     */
     @PostMapping("/doCustomerRegistration")
     public String doCustomerRegistration(@Valid @ModelAttribute CustomerModel customerModel, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors() || !customersService.addCustomer(customerModel)) {
@@ -64,6 +71,12 @@ public class CustomerController {
         return "redirect:/login";
     }
 
+    /**
+     * Method for displaying a customer's direct information in the Customer Info page
+     * @param customerId
+     * @param model
+     * @return
+     */
     @GetMapping("/info/{customerId}")
     public String displayCustomerInfo(@PathVariable String customerId, Model model) {
         model.addAttribute("title", "Customer Info");
@@ -74,6 +87,12 @@ public class CustomerController {
 
     // ---------------- Edit / Update / Delete ----------------
 
+    /**
+     * Method for displaying the Edit Customer page
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping("/edit/{id}")
     public String editCustomer(@PathVariable int id, Model model) {
         CustomerModel customer = customersService.getCustomerById(String.valueOf(id));
@@ -85,34 +104,31 @@ public class CustomerController {
         return "redirect:/customers/all";
     }
 
+    /**
+     * POST processing method for the "Update Customer" page
+     * @param customer
+     * @return
+     */
     @PostMapping("/update")
     public String updateCustomer(@ModelAttribute CustomerModel customer) {
         customersService.updateCustomer(customer);
         return "redirect:/customers/all";
     }
 
+    /**
+     * Method for deleting a customer from the customer List
+     * @param id
+     * @param redirectAttributes
+     * @return
+     */
     @GetMapping("/delete/{id}")
     public String deleteCustomer(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
         try {
-            customersService.deleteCustomerById(id);
+            customersService.deleteCustomer(id);
             redirectAttributes.addFlashAttribute("message", "Customer deleted successfully!");
         } catch (RuntimeException ex) {
             redirectAttributes.addFlashAttribute("error", ex.getMessage());
         }
         return "redirect:/customers/all";
     }
-
-    
-    @GetMapping("/test-delete/{id}")
-    @ResponseBody
-    public String testDelete(@PathVariable("id") int id) {
-        CustomerModel customer = customersService.getCustomerById(String.valueOf(id));
-        if (customer != null) {
-            customersService.deleteCustomerById(id);
-            return "Deleted customer with ID: " + id;
-        } else {
-            return "Customer with ID " + id + " not found.";
-        }
-    }
-
 }

@@ -13,7 +13,7 @@ public interface VehiclesBusinessServiceInterface {
     List<VehicleModel> getVehiclesByCustomerId(String customerId);
     boolean addVehicle(VehicleModel vehicle);
     boolean deleteVehicleById(int id);
-    boolean updateVehicle(VehicleModel vehicle); // ✅ Add this
+    boolean updateVehicle(VehicleModel vehicle);
     void destroy();
     VehicleModel getVehicleById(int id);
 

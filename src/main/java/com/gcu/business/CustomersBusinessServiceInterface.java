@@ -13,8 +13,7 @@ public interface CustomersBusinessServiceInterface {
     CustomerModel getCustomerById(String customerId);
     boolean addCustomer(CustomerModel customer);
     boolean updateCustomer(CustomerModel customer);  //  Added
-    boolean deleteCustomer(int id); 
-    public void deleteCustomerById(int id);
+    boolean deleteCustomer(int id);
                                                      
     void destroy();
 }

@@ -20,11 +20,17 @@ public class CustomerBusinessService implements CustomersBusinessServiceInterfac
     @Autowired
     CustomersDataService service;
 
+    /**
+     * Service Init method
+     */
     @Override
     public void init() {
         System.out.println("Customer Business Service initialized.");
     }
 
+    /**
+     * CRUD method to get a specific customer ID
+     */
     @Override
     public CustomerModel getCustomerById(String customerId) {
         CustomerEntity e = service.findById(Integer.parseInt(customerId));
@@ -37,6 +43,9 @@ public class CustomerBusinessService implements CustomersBusinessServiceInterfac
         );
     }
 
+    /**
+     * CRUD method to get all customers
+     */
     @Override
     public List<CustomerModel> getCustomers() {
         List<CustomerEntity> customersEntity = service.findAll();
@@ -50,6 +59,9 @@ public class CustomerBusinessService implements CustomersBusinessServiceInterfac
         return customersDomain;
     }
 
+    /**
+     * CRUD method to add a customer
+     */
     @Override
     public boolean addCustomer(CustomerModel customer) {
         return service.create(new CustomerEntity(
@@ -59,6 +71,9 @@ public class CustomerBusinessService implements CustomersBusinessServiceInterfac
         ));
     }
 
+    /**
+     * CRUD method to update a customer
+     */
     @Override
     public boolean updateCustomer(CustomerModel customer) {
         return service.update(new CustomerEntity(
@@ -68,6 +83,9 @@ public class CustomerBusinessService implements CustomersBusinessServiceInterfac
         ));
     }
 
+    /**
+     * CRUD method to delete a customer
+     */
     @Override
     public boolean deleteCustomer(int id) {
         CustomerEntity entity = service.findById(id);
@@ -77,18 +95,9 @@ public class CustomerBusinessService implements CustomersBusinessServiceInterfac
         return false;
     }
 
-    @Override
-    public void deleteCustomerById(int id) {
-        CustomerEntity entity = service.findById(id);
-        System.out.println("Found customer for deletion: " + entity); // Log
-        if (entity != null) {
-            service.delete(entity);
-        } else {
-            System.out.println("Customer not found for ID: " + id);
-        }
-    }
-
-
+    /**
+     * Service destruction method
+     */
     @Override
     public void destroy() {
         System.out.println("Customer Business Service terminated.");

@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
+	/**
+	 * Method to display the "Home" page
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/")
 	public String home(Model model)
 	{

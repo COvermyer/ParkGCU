@@ -60,7 +60,7 @@ public class VehicleModel {
     }
 
     /**
-     * Full constructor for creating a complete VehicleModel object
+     * Parameterized constructor
      */
     public VehicleModel(Integer vehicleId, Integer customerId, String color, Integer year, String make, String model,
                         String plateState, String plateNumber) {
@@ -76,66 +76,130 @@ public class VehicleModel {
 
     // Getters and setters for all fields
 
+    /**
+     * Getter for vehicleId
+     * @return
+     */
     public Integer getVehicleId() {
         return vehicleId;
     }
 
+    /**
+     * Setter for vehicleId
+     * @param vehicleId
+     */
     public void setVehicleId(Integer vehicleId) {
         this.vehicleId = vehicleId;
     }
 
+    /**
+     * Getter for customerId
+     * @return
+     */
     public Integer getCustomerId() {
         return customerId;
     }
 
+    /**
+     * Setter for customerId
+     * @param customerId
+     */
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
 
+    /**
+     * Getter for color
+     * @return
+     */
     public String getColor() {
         return color;
     }
 
+    /**
+     * Setter for color
+     * @param color
+     */
     public void setColor(String color) {
         this.color = color;
     }
 
+    /**
+     * getter for year
+     * @return
+     */
     public Integer getYear() {
         return year;
     }
 
+    /**
+     * Setter for year
+     * @param year
+     */
     public void setYear(Integer year) {
         this.year = year;
     }
 
+    /**
+     * getter for make
+     * @return
+     */
     public String getMake() {
         return make;
     }
 
+    /**
+     * setter for make
+     * @param make
+     */
     public void setMake(String make) {
         this.make = make;
     }
 
+    /**
+     * Getter for model
+     * @return
+     */
     public String getModel() {
         return model;
     }
 
+    /**
+     * Setter for model
+     * @param model
+     */
     public void setModel(String model) {
         this.model = model;
     }
 
+    /**
+     * Getter for plate state
+     * @return
+     */
     public String getPlateState() {
         return plateState;
     }
 
+    /**
+     * Setter for plate state
+     * @param plateState
+     */
     public void setPlateState(String plateState) {
         this.plateState = plateState;
     }
 
+    /**
+     * Getter for plate number
+     * @return
+     */
     public String getPlateNumber() {
         return plateNumber;
     }
 
+    /**
+     * Setter for plate number
+     * @param plateNumber
+     */
     public void setPlateNumber(String plateNumber) {
         this.plateNumber = plateNumber;
     }

@@ -15,12 +15,18 @@ import org.springframework.stereotype.Service;
 import com.gcu.data.UserDataService;
 import com.gcu.data.entity.UserEntity;
 
+/**
+ * UserDetailService implementation used for user authz and role assignment
+ */
 @Service
 public class UserBusinessService implements UserDetailsService {
 
 	@Autowired
 	UserDataService service;
 	
+	/**
+	 * Loads a user by username and provides the UserDetails if found
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserEntity user = service.findByUsername(username);

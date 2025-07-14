@@ -21,6 +21,9 @@ public class CustomersDataService implements DataAccessInterface<CustomerEntity>
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * CRUD find all customers
+     */
     @Override
     public List<CustomerEntity> findAll() {
         List<CustomerEntity> customers = new ArrayList<>();
@@ -33,6 +36,9 @@ public class CustomersDataService implements DataAccessInterface<CustomerEntity>
         return customers;
     }
 
+    /**
+     * CRUD find customer by ID
+     */
     @Override
     public CustomerEntity findById(int id) {
         String sql = "SELECT * FROM customers WHERE customerId = ?";
@@ -47,6 +53,9 @@ public class CustomersDataService implements DataAccessInterface<CustomerEntity>
         return null;
     }
 
+    /**
+     * CRUD add a new customer
+     */
     @Override
     public boolean create(CustomerEntity customer) {
         String sql = "INSERT INTO customers (customerId, firstName, lastName, email, phoneNumber, username, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -69,6 +78,9 @@ public class CustomersDataService implements DataAccessInterface<CustomerEntity>
         return false;
     }
 
+    /**
+     * CRUD update existing customer
+     */
     @Override
     public boolean update(CustomerEntity customer) {
         String sql = "UPDATE customers SET firstName = ?, lastName = ?, email = ?, phoneNumber = ?, username = ?, password = ? WHERE customerId = ?";
@@ -89,6 +101,9 @@ public class CustomersDataService implements DataAccessInterface<CustomerEntity>
         return false;
     }
 
+    /**
+     * CRUD delete a customer by entity
+     */
     @Override
     public boolean delete(CustomerEntity customer) {
         String sql1 = "DELETE FROM vehicles WHERE customerId = ?";
@@ -105,6 +120,9 @@ public class CustomersDataService implements DataAccessInterface<CustomerEntity>
         return rowsDeleted >= 1;
     }
 
+    /**
+     * CRUD delete a customer by customer ID
+     */
     @Override
     public boolean deleteById(int id) {
         String sql1 = "DELETE FROM vehicles WHERE customerId = ?";
@@ -119,30 +137,5 @@ public class CustomersDataService implements DataAccessInterface<CustomerEntity>
             e.printStackTrace();
         }
         return rowsDeleted >= 1;
-    }
-
-    public int validateUserLogin(String username, String password) {
-        int customerId = -1;
-        String sql = "SELECT * FROM customers WHERE UPPER(username) = ?";
-        try {
-            List<CustomerEntity> results = jdbcTemplate.query(sql, new CustomerRowMapper(), username.toUpperCase());
-            if (results.isEmpty()) {
-                System.out.println("Login failed: No user found with username " + username);
-                return -1;
-            }
-
-            CustomerEntity customer = results.get(0);
-            if (customer != null && customer.getPassword().equals(password)) {
-                customerId = customer.getCustomerId();
-                System.out.println("Login successful for user: " + username);
-            } else {
-                System.out.println("Login failed: Incorrect password for user " + username);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return customerId;
     }
 }
